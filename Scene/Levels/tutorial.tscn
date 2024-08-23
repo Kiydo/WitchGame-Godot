@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://be3jeyf7uv5qb"]
+
+[ext_resource type="PackedScene" uid="uid://63p5f4po4kuv" path="res://Prefab/Environment/StoneGround.tscn" id="1_rw8wh"]
+[ext_resource type="PackedScene" uid="uid://dsbajyc2cqd5l" path="res://Prefab/Entities/Player/player.tscn" id="2_2kncn"]
+
+[node name="Tutorial" type="Node2D"]
+
+[node name="StoneGround" parent="." instance=ExtResource("1_rw8wh")]
+
+[node name="Player" parent="." instance=ExtResource("2_2kncn")]
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+scale = Vector2(1e-05, 1e-05)
+offset = Vector2(0, -256)
+zoom = Vector2(0.3, 0.3)

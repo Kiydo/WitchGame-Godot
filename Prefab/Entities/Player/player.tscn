@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://dsbajyc2cqd5l"]
+[gd_scene load_steps=28 format=3 uid="uid://dsbajyc2cqd5l"]
 
 [ext_resource type="Script" path="res://Prefab/Entities/Player/player.gd" id="1_ee5hq"]
 [ext_resource type="Texture2D" uid="uid://bjnkvavr2uvtd" path="res://Prefab/Entities/Player/WitchMovement.png" id="1_ka56g"]
@@ -210,80 +210,9 @@ animations = [{
 "speed": 9.0
 }]
 
-[sub_resource type="Animation" id="Animation_8lbxq"]
-resource_name = "idle"
-length = 1.1667
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:animation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"idle"]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.266667, 0.533333, 0.8, 1.06667),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4]
-}
-
-[sub_resource type="Animation" id="Animation_ae0xt"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:animation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"idle"]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
-[sub_resource type="Animation" id="Animation_ik6ng"]
-resource_name = "run"
-length = 1.0001
-loop_mode = 1
-step = 0.0
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_r5raq"]
-_data = {
-"RESET": SubResource("Animation_ae0xt"),
-"idle": SubResource("Animation_8lbxq"),
-"run": SubResource("Animation_ik6ng")
-}
-
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fihsh"]
 radius = 60.0
 height = 318.0
-
-[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_lrwed"]
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
@@ -292,18 +221,10 @@ script = ExtResource("1_ee5hq")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -92)
 sprite_frames = SubResource("SpriteFrames_ci5gw")
-animation = &"idle"
+animation = &"jump_up"
 autoplay = "idle"
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite2D"]
-libraries = {
-"": SubResource("AnimationLibrary_r5raq")
-}
+frame_progress = 0.900491
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-2, -162)
 shape = SubResource("CapsuleShape2D_fihsh")
-
-[node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource("AnimationNodeStateMachine_lrwed")
-advance_expression_base_node = NodePath("../AnimatedSprite2D")

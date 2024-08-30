@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://be3jeyf7uv5qb"]
+
+[ext_resource type="PackedScene" uid="uid://dsbajyc2cqd5l" path="res://Prefab/Entities/Player/player.tscn" id="1_opkws"]
+[ext_resource type="PackedScene" uid="uid://63p5f4po4kuv" path="res://Prefab/Environment/StoneGround.tscn" id="2_3uiey"]
+[ext_resource type="Texture2D" uid="uid://blnogqh8mb7ab" path="res://Textures/Environment/Background/BrickWall.png" id="3_e38y0"]
+
+[node name="Tutorial" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_opkws")]
+JUMPFORCE = -1700
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+scale = Vector2(1e-05, 1e-05)
+offset = Vector2(0, -256)
+zoom = Vector2(0.3, 0.3)
+
+[node name="Floor" type="Node2D" parent="."]
+
+[node name="StoneGround" parent="Floor" instance=ExtResource("2_3uiey")]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2(1920, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+texture_repeat = 2
+texture = ExtResource("3_e38y0")
+centered = false

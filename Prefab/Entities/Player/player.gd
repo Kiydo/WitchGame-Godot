@@ -5,9 +5,9 @@ extends CharacterBody2D
 # !is_on_floor available via "Characterbody2D"
 
 # Variables
-@export var SPEED : int = 1000
-@export var GRAVITY : int = 2000
-@export var JUMPFORCE : int = -1200
+@export var SPEED : int = 1500
+@export var GRAVITY : int = 3000
+@export var JUMPFORCE : int = -1500
 @export var JUMP_HORIZONTAL : int = 100
 # List of States of the player
 enum State {IDLE, RUN, JUMP, JUMP_START, JUMP_UP, JUMP_FALL, JUMP_END}

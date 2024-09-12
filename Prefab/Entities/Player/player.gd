@@ -10,8 +10,11 @@ extends CharacterBody2D
 @export var GRAVITY : int = 3000
 @export var JUMPFORCE : int = -1500
 @export var JUMP_HORIZONTAL : int = 100
+@export var DASH_SPEED : int = 5000
+@export var DASH_DURATION = 0.6
+@export var DASH_TIME_LEFT = 0
 # List of States of the player
-enum State {IDLE, RUN, JUMP, JUMP_START, JUMP_UP, JUMP_FALL, JUMP_END, RECHARGE, MELEE, MELEE_AIR, BEAM, BEAM_AIR, FIREBALL, BULLET, DOUBLEJUMP}
+enum State {IDLE, RUN, JUMP, JUMP_START, JUMP_UP, JUMP_FALL, JUMP_END, RECHARGE, DASH, MELEE, MELEE_AIR, BEAM, BEAM_AIR, FIREBALL, BULLET, DOUBLEJUMP}
 # variable to represent current state of player 
 var current_state : State # to make it static variable to States only
 var animation_trigger = false # to prevent other animations from overiding current animation playing
@@ -30,11 +33,14 @@ func _ready():
 # _physics_prcoess(delta): for physics interactions and animations for player
 func _physics_process(delta : float):
 	if is_recharging == false:
-		player_falling(delta)
-		player_idle(delta)
-		player_run(delta)
-		player_jump(delta)
-		player_doublejump(delta)
+		player_dash(delta)
+		if current_state != State.DASH:
+			player_falling(delta)
+			player_idle(delta)
+			player_run(delta)
+			player_jump(delta)
+			player_doublejump(delta)
+		
 	
 	player_recharge(delta)
 	
@@ -102,6 +108,21 @@ func player_run(delta : float):
 		# if player goes left it flips sprite animation to indicate direction
 		animated_sprite_2d.flip_h = false if direction > 0 else true
 
+func player_dash(delta : float):
+	if Input.is_action_just_pressed("dash"):
+		current_state = State.DASH
+		DASH_TIME_LEFT = DASH_DURATION
+		var direction = 1
+		if animated_sprite_2d.flip_h:
+			direction = -1
+		
+		velocity.x = direction * (DASH_SPEED * 50) * delta
+		
+	if current_state == State.DASH:
+		DASH_TIME_LEFT -= delta
+		if DASH_TIME_LEFT <= 0:
+			current_state = State.IDLE
+
 func player_recharge(delta : float):
 	if Input.is_action_pressed("recharge") and is_on_floor:
 		if !is_recharging:
@@ -156,6 +177,10 @@ func player_animations():
 			if animation_trigger == false:
 				animation_trigger = true
 				animated_sprite_2d.play("double_jump")
+		State.DASH:
+			if animation_trigger == false:
+				animation_trigger = true
+				animated_sprite_2d.play("dash")
 		State.FIREBALL:
 			if animation_trigger == false:
 				animated_sprite_2d.play("fireball")

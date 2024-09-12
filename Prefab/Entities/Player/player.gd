@@ -11,13 +11,15 @@ extends CharacterBody2D
 @export var JUMPFORCE : int = -1500
 @export var JUMP_HORIZONTAL : int = 100
 # List of States of the player
-enum State {IDLE, RUN, JUMP, JUMP_START, JUMP_UP, JUMP_FALL, JUMP_END, RECHARGE, MELEE, MELEE_AIR, BEAM, BEAM_AIR}
+enum State {IDLE, RUN, JUMP, JUMP_START, JUMP_UP, JUMP_FALL, JUMP_END, RECHARGE, MELEE, MELEE_AIR, BEAM, BEAM_AIR, FIREBALL, BULLET, DOUBLEJUMP}
 # variable to represent current state of player 
 var current_state : State # to make it static variable to States only
 var animation_trigger = false # to prevent other animations from overiding current animation playing
 var character_sprite : Sprite2D
 #var can_change_animation = true # So animations can finish
 var is_recharging : bool = false
+var has_jumped : bool = false
+var has_doublejumped : bool = false
 # _ready(): first function called only once
 func _ready():
 	# To initialize idle state first
@@ -32,6 +34,7 @@ func _physics_process(delta : float):
 		player_idle(delta)
 		player_run(delta)
 		player_jump(delta)
+		player_doublejump(delta)
 	
 	player_recharge(delta)
 	
@@ -56,19 +59,29 @@ func player_falling(delta : float):
 	elif current_state == State.JUMP_FALL:
 		current_state = State.JUMP_END
 	elif is_on_floor():
+		has_jumped = false
+		has_doublejumped = false
 		current_state = State.IDLE
 
 func player_jump(delta : float):
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMPFORCE
 		current_state = State.JUMP_START
+		has_jumped = true
 	if !is_on_floor():
 		if current_state == State.JUMP_UP or current_state == State.JUMP_FALL:
 			var direction = input_movement()
 			if direction != 0 and !is_on_floor():
 				animated_sprite_2d.flip_h = false if direction > 0 else true
 				velocity.x += direction * JUMP_HORIZONTAL * delta
-		
+
+func player_doublejump(delta : float):
+	if Input.is_action_just_pressed("jump") and !is_on_floor() and has_doublejumped == false:
+		print("has double jumped")
+		has_jumped = false
+		velocity.y = JUMPFORCE
+		current_state = State.DOUBLEJUMP
+		has_doublejumped = true
 
 func player_idle(delta : float):
 	if is_on_floor() and current_state != State.JUMP_END:
@@ -106,6 +119,10 @@ func player_recharge(delta : float):
 			return
 		#animated_sprite_2d.play("idle")
 
+func player_attack(delta : float):
+	pass
+	
+
 # Function for playing sprite animation, ("play" available via AnimationPlayer )
 func player_animations():
 	match current_state:
@@ -135,6 +152,25 @@ func player_animations():
 				animation_trigger = true
 				animated_sprite_2d.play("recharge")
 				animated_sprite_2d_2.play("recharge")
+		State.DOUBLEJUMP:
+			if animation_trigger == false:
+				animation_trigger = true
+				animated_sprite_2d.play("double_jump")
+		State.FIREBALL:
+			if animation_trigger == false:
+				animated_sprite_2d.play("fireball")
+		State.BEAM:
+			if animation_trigger == false:
+				animated_sprite_2d.play("beam")
+		State.BEAM_AIR:
+			if animation_trigger == false:
+				animated_sprite_2d.play("beam_air")
+		State.MELEE:
+			if animation_trigger == false:
+				animated_sprite_2d.play("melee")
+		State.MELEE_AIR:
+			if animation_trigger == false:
+				animated_sprite_2d.play("melee_air")
 
 func _on_animation_finished():
 	animation_trigger = false

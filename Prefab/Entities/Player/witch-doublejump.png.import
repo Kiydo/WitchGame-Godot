@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d3h6n4r3m67m7"
-path="res://.godot/imported/witch-air-beam.png-67097091ab00a5d42bee081556cda713.ctex"
+uid="uid://bfg3vuaeqrv1f"
+path="res://.godot/imported/witch-doublejump.png-f29f3b12f7f4f17ac9874b2bd3bfe1aa.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Prefab/Entities/Player/witch-air-beam.png"
-dest_files=["res://.godot/imported/witch-air-beam.png-67097091ab00a5d42bee081556cda713.ctex"]
+source_file="res://Prefab/Entities/Player/witch-doublejump.png"
+dest_files=["res://.godot/imported/witch-doublejump.png-f29f3b12f7f4f17ac9874b2bd3bfe1aa.ctex"]
 
 [params]
 

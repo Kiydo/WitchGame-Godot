@@ -1,0 +1,85 @@
+[gd_scene load_steps=13 format=3 uid="uid://tltqhuwcldj8"]
+
+[ext_resource type="Texture2D" uid="uid://cqxn32uabqrul" path="res://Prefab/Entities/Enemies/Slime/Slime.png" id="1_6jogi"]
+[ext_resource type="Script" path="res://Prefab/Entities/Enemies/Slime/slime.gd" id="1_ntrps"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_udf41"]
+atlas = ExtResource("1_6jogi")
+region = Rect2(0, 0, 1000, 1000)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xeko0"]
+atlas = ExtResource("1_6jogi")
+region = Rect2(1000, 0, 1000, 1000)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lf8gt"]
+atlas = ExtResource("1_6jogi")
+region = Rect2(2000, 0, 1000, 1000)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3gffq"]
+atlas = ExtResource("1_6jogi")
+region = Rect2(0, 1000, 1000, 1000)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qtqvw"]
+atlas = ExtResource("1_6jogi")
+region = Rect2(1000, 1000, 1000, 1000)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m5d0x"]
+atlas = ExtResource("1_6jogi")
+region = Rect2(2000, 1000, 1000, 1000)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_82txw"]
+atlas = ExtResource("1_6jogi")
+region = Rect2(0, 2000, 1000, 1000)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t1ien"]
+atlas = ExtResource("1_6jogi")
+region = Rect2(1000, 2000, 1000, 1000)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_edd6d"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_udf41")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xeko0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lf8gt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3gffq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qtqvw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m5d0x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_82txw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t1ien")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 8.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_epqah"]
+size = Vector2(298, 204)
+
+[node name="Slime" type="CharacterBody2D"]
+position = Vector2(0, -92)
+script = ExtResource("1_ntrps")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_edd6d")
+animation = &"walk"
+autoplay = "walk"
+frame_progress = 0.245421
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-44, -10)
+shape = SubResource("RectangleShape2D_epqah")

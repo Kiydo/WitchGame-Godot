@@ -1,5 +1,6 @@
 extends CharacterBody2D
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
+@onready var animated_sprite_2d_2: AnimatedSprite2D = $AnimatedSprite2D/AnimatedSprite2D2
 # NOTES
 # "_" used as "private" only to be used on this script
 # !is_on_floor available via "Characterbody2D"
@@ -10,13 +11,13 @@ extends CharacterBody2D
 @export var JUMPFORCE : int = -1500
 @export var JUMP_HORIZONTAL : int = 100
 # List of States of the player
-enum State {IDLE, RUN, JUMP, JUMP_START, JUMP_UP, JUMP_FALL, JUMP_END}
+enum State {IDLE, RUN, JUMP, JUMP_START, JUMP_UP, JUMP_FALL, JUMP_END, RECHARGE, MELEE, MELEE_AIR, BEAM, BEAM_AIR}
 # variable to represent current state of player 
 var current_state : State # to make it static variable to States only
 var animation_trigger = false # to prevent other animations from overiding current animation playing
 var character_sprite : Sprite2D
 #var can_change_animation = true # So animations can finish
-
+var is_recharging : bool = false
 # _ready(): first function called only once
 func _ready():
 	# To initialize idle state first
@@ -26,10 +27,13 @@ func _ready():
 # _process(delta): every frame by time delta
 # _physics_prcoess(delta): for physics interactions and animations for player
 func _physics_process(delta : float):
-	player_falling(delta)
-	player_idle(delta)
-	player_run(delta)
-	player_jump(delta)
+	if is_recharging == false:
+		player_falling(delta)
+		player_idle(delta)
+		player_run(delta)
+		player_jump(delta)
+	
+	player_recharge(delta)
 	
 	move_and_slide()
 	
@@ -85,6 +89,23 @@ func player_run(delta : float):
 		# if player goes left it flips sprite animation to indicate direction
 		animated_sprite_2d.flip_h = false if direction > 0 else true
 
+func player_recharge(delta : float):
+	if Input.is_action_pressed("recharge") and is_on_floor:
+		if !is_recharging:
+			velocity = Vector2.ZERO
+			if velocity == Vector2.ZERO:
+				is_recharging = true
+				velocity.y += GRAVITY * delta
+			current_state = State.RECHARGE
+	elif !Input.is_action_pressed("recharge"):
+		if is_recharging:
+			print("stopped animatiojns")
+			is_recharging = false
+			animated_sprite_2d_2.play("nothing")
+			animation_trigger = false
+			return
+		#animated_sprite_2d.play("idle")
+
 # Function for playing sprite animation, ("play" available via AnimationPlayer )
 func player_animations():
 	match current_state:
@@ -109,6 +130,11 @@ func player_animations():
 			if animation_trigger == false:
 				animation_trigger = true
 				animated_sprite_2d.play("jump_end")
+		State.RECHARGE:
+			if animation_trigger == false and is_recharging == true:
+				animation_trigger = true
+				animated_sprite_2d.play("recharge")
+				animated_sprite_2d_2.play("recharge")
 
 func _on_animation_finished():
 	animation_trigger = false

@@ -2,13 +2,17 @@
 
 extends CharacterBody2D
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
+@onready var timer: Timer = $Timer # timer for how long to wait in idle state
 @export var patrol_points : Node # gets the patrol points node after assigning from inspector
 @export var GRAVITY : int = 3000
-@export var SPEED = 1500
+@export var SPEED = 15000
+@export var wait_time : int = 3
 
 enum State {IDLE, WALK, ATTACK}
 var current_state : State
 var direction : Vector2 = Vector2.LEFT
+var can_walk : bool
+var can_flip_sprite : bool
 # Variables for enemeny patrol points
 var number_of_points : int
 var point_positions: Array[Vector2]
@@ -25,7 +29,11 @@ func _ready() -> void:
 	else:
 		print("Skeleton no patrol point")
 			
+	timer.wait_time = wait_time # set timer wait time easier and for diversity
+	
 	current_state = State.IDLE
+	
+	animated_sprite_2d.flip_h = direction.x < 1
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -42,29 +50,38 @@ func enemy_gravity(delta: float):
 	velocity.y += GRAVITY * delta
 
 func enemy_idle(delta: float):
-	velocity.x = move_toward(velocity.x, 0, SPEED * delta)
-	current_state = State.IDLE
+	if !can_walk:
+		velocity.x = move_toward(velocity.x, 0, SPEED * delta)
+		current_state = State.IDLE
 	
 func enemy_walk(delta: float):
+	if !can_walk:
+		return
+		
 	if abs(position.x - current_point.x) > 0.5: # if current position is further than 0.5 from patrol point keep walking
 		velocity.x = direction.x * SPEED * delta
 		current_state = State.WALK
 	else:
+		
 		current_point_position += 1 # change patrol point position via array
 		
-	if current_point_position >= number_of_points: # to keep same logic when 2nd patrol point is reached so that array doesn't go over
-		current_point_position = 0
-	
-	current_point = point_positions[current_point_position]
-	
-	if current_point.x > position.x:
-		direction = Vector2.RIGHT
-	else:
-		direction = Vector2.LEFT
-	
-	if direction == Vector2.LEFT: # sprite direction facing
-		# if player goes left it flips sprite animation to indicate direction
-		animated_sprite_2d.flip_h = false if direction == Vector2.RIGHT else true
+		if current_point_position >= number_of_points: # to keep same logic when 2nd patrol point is reached so that array doesn't go over
+			current_point_position = 0
+		
+		current_point = point_positions[current_point_position]
+		
+		if current_point.x > position.x:
+			direction = Vector2.RIGHT
+		else:
+			direction = Vector2.LEFT
+			
+		timer.start()
+		can_walk = false
+		can_flip_sprite = false
+		
+	if can_flip_sprite == true:
+		animated_sprite_2d.flip_h = direction.x < 1 # sprite direction facing
+		
 	
 func enemy_animations():
 	match current_state:
@@ -74,3 +91,8 @@ func enemy_animations():
 			animated_sprite_2d.play("walk")
 		State.ATTACK:
 			animated_sprite_2d.play("attack")
+
+
+func _on_timer_timeout() -> void:
+	can_walk = true
+	can_flip_sprite = true

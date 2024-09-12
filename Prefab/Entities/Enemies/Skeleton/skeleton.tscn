@@ -137,3 +137,9 @@ shape = SubResource("RectangleShape2D_b0jbt")
 visible = false
 position = Vector2(136.5, 4)
 shape = SubResource("RectangleShape2D_16ehy")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -58,8 +58,8 @@ func enemy_walk(delta: float):
 	if !can_walk:
 		return
 		
-	if abs(position.x - current_point.x) > 0.5: # if current position is further than 0.5 from patrol point keep walking
-		velocity.x = direction.x * SPEED * delta
+	if abs(position.x - current_point.x) > 3: # if current position is further than 0.5 from patrol point keep walking
+		velocity.x = direction.x * (SPEED * 2.5) * delta
 		current_state = State.WALK
 	else:
 		

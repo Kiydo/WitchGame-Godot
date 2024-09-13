@@ -63,7 +63,7 @@ SPEED = 10000
 position = Vector2(-653, 302)
 
 [node name="Point2" type="Marker2D" parent="Enemies/Skeleton/PatrolPoints"]
-position = Vector2(1956, 294)
+position = Vector2(1918, 270)
 
 [node name="Slime" parent="Enemies" node_paths=PackedStringArray("patrol_points") instance=ExtResource("5_pqrpi")]
 position = Vector2(-1090, -489)
@@ -79,6 +79,7 @@ position = Vector2(-1189, 122)
 position = Vector2(637, 112)
 
 [node name="Ui" parent="." instance=ExtResource("5_3jhp1")]
+unique_name_in_owner = true
 offset_left = 1157.0
 offset_top = 1614.0
 offset_right = 1157.0

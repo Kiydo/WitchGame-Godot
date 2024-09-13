@@ -1,6 +1,8 @@
 extends CharacterBody2D
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var animated_sprite_2d_2: AnimatedSprite2D = $AnimatedSprite2D/AnimatedSprite2D2
+@onready var hotbar = $"../Ui/CanvasLayer/bottom/Hotbar"
+
 # NOTES
 # "_" used as "private" only to be used on this script
 # !is_on_floor available via "Characterbody2D"
@@ -23,11 +25,15 @@ var character_sprite : Sprite2D
 var is_recharging : bool = false
 var has_jumped : bool = false
 var has_doublejumped : bool = false
+
+var current_slot # index for a, s, d = 3,4,5
 # _ready(): first function called only once
 func _ready():
 	# To initialize idle state first
 	current_state = State.IDLE
 	animated_sprite_2d.connect("animation_finished", Callable(self, "_on_animation_finished"))
+	
+	print(hotbar)
 
 # _process(delta): every frame by time delta
 # _physics_prcoess(delta): for physics interactions and animations for player
@@ -40,6 +46,8 @@ func _physics_process(delta : float):
 			player_run(delta)
 			player_jump(delta)
 			player_doublejump(delta)
+			player_attack(delta)
+			player_hotbar(delta)
 		
 	
 	player_recharge(delta)
@@ -140,9 +148,43 @@ func player_recharge(delta : float):
 			return
 		#animated_sprite_2d.play("idle")
 
+func player_hotbar(delta : float):
+	if Input.is_action_just_pressed("slotA"):
+		current_slot = 3
+		hotbar.select(current_slot)
+		print(current_slot)
+	if Input.is_action_just_pressed("slotS"):
+		current_slot = 4
+		hotbar.select(current_slot)
+		print(current_slot)
+	if Input.is_action_just_pressed("slotD"):
+		current_slot = 5
+		hotbar.select(current_slot)
+		print(current_slot)
+		
+
 func player_attack(delta : float):
-	pass
-	
+	if Input.is_action_just_pressed("melee"):
+		if is_on_floor():
+			current_state = State.MELEE
+		if !is_on_floor():
+			current_state = State.MELEE_AIR
+	if Input.is_action_just_pressed("magic_attack") and current_slot != null:
+		match current_slot:
+			3: # Magic Bullet
+				print("magic bullet")
+				current_state = State.BULLET
+			4: # Fire Ball
+				print("fire ball")
+				current_state = State.FIREBALL
+			5: # Magic Beam
+				if !is_on_floor():
+					print("beam air")
+					current_state = State.BEAM_AIR
+				else:
+					print("beam ground")
+					current_state = State.BEAM
+
 
 # Function for playing sprite animation, ("play" available via AnimationPlayer )
 func player_animations():
@@ -181,20 +223,29 @@ func player_animations():
 			if animation_trigger == false:
 				animation_trigger = true
 				animated_sprite_2d.play("dash")
+		State.BULLET:
+			if animation_trigger == false:
+				animation_trigger = true
+				animated_sprite_2d.play("bullet")
 		State.FIREBALL:
 			if animation_trigger == false:
+				animation_trigger = true
 				animated_sprite_2d.play("fireball")
 		State.BEAM:
 			if animation_trigger == false:
+				animation_trigger = true
 				animated_sprite_2d.play("beam")
 		State.BEAM_AIR:
 			if animation_trigger == false:
+				animation_trigger = true
 				animated_sprite_2d.play("beam_air")
 		State.MELEE:
 			if animation_trigger == false:
+				animation_trigger = true
 				animated_sprite_2d.play("melee")
 		State.MELEE_AIR:
 			if animation_trigger == false:
+				animation_trigger = true
 				animated_sprite_2d.play("melee_air")
 
 func _on_animation_finished():

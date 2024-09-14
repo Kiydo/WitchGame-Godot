@@ -1,0 +1,118 @@
+[gd_scene load_steps=16 format=3 uid="uid://cgtnsgybya8bn"]
+
+[ext_resource type="Texture2D" uid="uid://bru4flmmaulos" path="res://Textures/Projectiles/PlayerSpells/lightball.png" id="1_prnu1"]
+[ext_resource type="Script" path="res://Prefab/Entities/Projectiles/fireball.gd" id="2_02ylq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6psiv"]
+atlas = ExtResource("1_prnu1")
+region = Rect2(0, 0, 1000, 1000)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rdfo8"]
+atlas = ExtResource("1_prnu1")
+region = Rect2(1000, 0, 1000, 1000)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4kdfs"]
+atlas = ExtResource("1_prnu1")
+region = Rect2(2000, 0, 1000, 1000)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l0330"]
+atlas = ExtResource("1_prnu1")
+region = Rect2(3000, 0, 1000, 1000)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cnvvt"]
+atlas = ExtResource("1_prnu1")
+region = Rect2(0, 1000, 1000, 1000)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_87p1o"]
+atlas = ExtResource("1_prnu1")
+region = Rect2(3000, 0, 1000, 1000)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_du7es"]
+atlas = ExtResource("1_prnu1")
+region = Rect2(0, 1000, 1000, 1000)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a3hvm"]
+atlas = ExtResource("1_prnu1")
+region = Rect2(1000, 1000, 1000, 1000)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y4bqv"]
+atlas = ExtResource("1_prnu1")
+region = Rect2(2000, 1000, 1000, 1000)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ivut4"]
+atlas = ExtResource("1_prnu1")
+region = Rect2(3000, 1000, 1000, 1000)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qx6sf"]
+atlas = ExtResource("1_prnu1")
+region = Rect2(0, 2000, 1000, 1000)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2enit"]
+atlas = ExtResource("1_prnu1")
+region = Rect2(1000, 2000, 1000, 1000)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_43iqa"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6psiv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rdfo8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4kdfs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l0330")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cnvvt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_87p1o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_du7es")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a3hvm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y4bqv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ivut4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qx6sf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2enit")
+}],
+"loop": true,
+"name": &"fireball",
+"speed": 10.0
+}]
+
+[node name="Fireball" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_43iqa")
+animation = &"fireball"
+autoplay = "fireball"
+frame = 3
+frame_progress = 0.209047
+script = ExtResource("2_02ylq")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.8
+one_shot = true
+autostart = true
+
+[node name="Cast_Time" type="Timer" parent="."]
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

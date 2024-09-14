@@ -2,6 +2,10 @@ extends CharacterBody2D
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var animated_sprite_2d_2: AnimatedSprite2D = $AnimatedSprite2D/AnimatedSprite2D2
 @onready var hotbar = $"../Ui/CanvasLayer/bottom/Hotbar"
+@onready var wand : Marker2D = $Wand
+
+var bullet = preload("res://Prefab/Entities/Projectiles/bullet.tscn")
+var fireball = preload("res://Prefab/Entities/Projectiles/fireball.tscn")
 
 # NOTES
 # "_" used as "private" only to be used on this script
@@ -27,13 +31,30 @@ var has_jumped : bool = false
 var has_doublejumped : bool = false
 
 var current_slot # index for a, s, d = 3,4,5
+
+var wand_position
+
+enum Player_direction {RIGHT, LEFT}
+var current_player_direction
+
+var attack_cooldown : float = 1
+var is_on_cooldown : bool = false
+var magic_bullet_cooldown : float = 0.2
+var fireball_cooldown : float = 0.5
+var magic_beam_cooldown : float = 1
+var cooldown_timer : Timer
 # _ready(): first function called only once
 func _ready():
 	# To initialize idle state first
+	cooldown_timer = Timer.new()
+	cooldown_timer.one_shot = true
+	add_child(cooldown_timer)
 	current_state = State.IDLE
 	animated_sprite_2d.connect("animation_finished", Callable(self, "_on_animation_finished"))
 	
 	print(hotbar)
+	
+	wand_position = wand.position
 
 # _process(delta): every frame by time delta
 # _physics_prcoess(delta): for physics interactions and animations for player
@@ -41,6 +62,7 @@ func _physics_process(delta : float):
 	if is_recharging == false:
 		player_dash(delta)
 		if current_state != State.DASH:
+			player_face_direction()
 			player_falling(delta)
 			player_idle(delta)
 			player_run(delta)
@@ -48,6 +70,7 @@ func _physics_process(delta : float):
 			player_doublejump(delta)
 			player_attack(delta)
 			player_hotbar(delta)
+			
 		
 	
 	player_recharge(delta)
@@ -162,28 +185,99 @@ func player_hotbar(delta : float):
 		hotbar.select(current_slot)
 		print(current_slot)
 		
+func player_face_direction():
+	var direction = input_movement()
+	
+	if direction > 0:
+		current_player_direction = Player_direction.RIGHT
+	elif direction < 0:
+		current_player_direction = Player_direction.LEFT
+
+func run_timer(duration: float) -> void:
+	print("casting time: " )
+	var bullet_timer = Timer.new()
+	bullet_timer.wait_time = duration
+	bullet_timer.one_shot = true
+	add_child(bullet_timer)
+	bullet_timer.start()
+	await bullet_timer.timeout
+	bullet_timer.queue_free()
+
+func spell_cooldown(cooldown: float) -> void:
+	is_on_cooldown = true
+	cooldown_timer.wait_time = cooldown
+	cooldown_timer.start()
+	await cooldown_timer.timeout
+	is_on_cooldown = false
+	
+
+func player_cast_time():
+	match current_slot:
+		3:
+			await run_timer(0.1)
+		4:
+			await run_timer(0.8)
+		5:
+			await run_timer(4)
 
 func player_attack(delta : float):
-	if Input.is_action_just_pressed("melee"):
+	var direction = input_movement() # get current direction of player
+	if Input.is_action_just_pressed("melee") and is_on_cooldown == false:
 		if is_on_floor():
 			current_state = State.MELEE
 		if !is_on_floor():
 			current_state = State.MELEE_AIR
-	if Input.is_action_just_pressed("magic_attack") and current_slot != null:
+	if Input.is_action_just_pressed("magic_attack") and current_slot != null and is_on_cooldown == false:
 		match current_slot:
 			3: # Magic Bullet
-				print("magic bullet")
+				#if direction != 0: # this added for running animation when I make one
 				current_state = State.BULLET
+				await player_cast_time()
+				var bullet_instance = bullet.instantiate() as Node2D 
+				
+				print("magic bullet")
+				if current_player_direction == Player_direction.RIGHT:
+					bullet_instance.current_bullet_direction = current_player_direction
+					wand.position.x = wand_position.x
+				if current_player_direction == Player_direction.LEFT:
+					bullet_instance.current_bullet_direction = current_player_direction
+					wand.position.x = -wand_position.x
+				
+				bullet_instance.direction = direction
+				bullet_instance.global_position = wand.global_position
+				get_parent().add_child(bullet_instance)
+				await spell_cooldown(magic_bullet_cooldown)
+				
 			4: # Fire Ball
-				print("fire ball")
 				current_state = State.FIREBALL
+				await player_cast_time()
+				print("fire ball")
+				var fireball_instance = fireball.instantiate() as Node2D
+				if current_player_direction == Player_direction.RIGHT:
+					fireball_instance.current_bullet_direction = current_player_direction
+					wand.position.x = wand_position.x
+				if current_player_direction == Player_direction.LEFT:
+					fireball_instance.current_bullet_direction = current_player_direction
+					wand.position.x = -wand_position.x
+				
+				fireball_instance.direction = direction
+				fireball_instance.global_position = wand.global_position
+				get_parent().add_child(fireball_instance)
+				await spell_cooldown(fireball_cooldown)
+				
 			5: # Magic Beam
 				if !is_on_floor():
 					print("beam air")
 					current_state = State.BEAM_AIR
+					await player_cast_time()
+					
+					await spell_cooldown(magic_beam_cooldown)
 				else:
 					print("beam ground")
 					current_state = State.BEAM
+					await player_cast_time()
+					
+					await spell_cooldown(magic_beam_cooldown)
 
 
 # Function for playing sprite animation, ("play" available via AnimationPlayer )

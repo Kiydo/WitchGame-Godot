@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://w3qbu7qqiyip"
-path="res://.godot/imported/witch-dash.png-2befceead18d8fc120a465f2dc682ce1.ctex"
+uid="uid://bjnkvavr2uvtd"
+path="res://.godot/imported/WitchMovement.png-08f8678d98f030a0af19f34023821d32.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Prefab/Entities/Player/witch-dash.png"
-dest_files=["res://.godot/imported/witch-dash.png-2befceead18d8fc120a465f2dc682ce1.ctex"]
+source_file="res://Textures/Entities/Characters/Player/WitchMovement.png"
+dest_files=["res://.godot/imported/WitchMovement.png-08f8678d98f030a0af19f34023821d32.ctex"]
 
 [params]
 

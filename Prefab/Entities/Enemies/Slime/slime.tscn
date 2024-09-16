@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://tltqhuwcldj8"]
 
-[ext_resource type="Texture2D" uid="uid://cqxn32uabqrul" path="res://Prefab/Entities/Enemies/Slime/Slime.png" id="1_6jogi"]
+[ext_resource type="Texture2D" uid="uid://cqxn32uabqrul" path="res://Textures/Entities/Characters/Enemies/Slime/Slime.png" id="1_6jogi"]
 [ext_resource type="Script" path="res://Prefab/Entities/Enemies/Slime/slime.gd" id="1_ntrps"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_udf41"]

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bjnkvavr2uvtd"
-path="res://.godot/imported/WitchMovement.png-b7c45f88471393e0f2df8c8490b7beed.ctex"
+uid="uid://bo3roxhehp1ac"
+path="res://.godot/imported/skeleton.png-d9a3f07a8087ddfecbbbb0d08c6ec603.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Prefab/Entities/Player/WitchMovement.png"
-dest_files=["res://.godot/imported/WitchMovement.png-b7c45f88471393e0f2df8c8490b7beed.ctex"]
+source_file="res://Textures/Entities/Characters/Enemies/Skeleton/skeleton.png"
+dest_files=["res://.godot/imported/skeleton.png-d9a3f07a8087ddfecbbbb0d08c6ec603.ctex"]
 
 [params]
 

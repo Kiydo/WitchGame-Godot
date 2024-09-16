@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dyykibji7cw5x"
-path="res://.godot/imported/witch-melee.png-b6a97e544b47f8a285321856a514f4c2.ctex"
+uid="uid://bfg3vuaeqrv1f"
+path="res://.godot/imported/witch-doublejump.png-ceca97b00ec631cb0898f6168800c8e0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Prefab/Entities/Player/witch-melee.png"
-dest_files=["res://.godot/imported/witch-melee.png-b6a97e544b47f8a285321856a514f4c2.ctex"]
+source_file="res://Textures/Entities/Characters/Player/witch-doublejump.png"
+dest_files=["res://.godot/imported/witch-doublejump.png-ceca97b00ec631cb0898f6168800c8e0.ctex"]
 
 [params]
 

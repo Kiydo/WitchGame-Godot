@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cqxn32uabqrul"
-path="res://.godot/imported/Slime.png-8d3ac188f4d471699d49cc7c4b0214e1.ctex"
+uid="uid://w3qbu7qqiyip"
+path="res://.godot/imported/witch-dash.png-44143a24eec5d803aec9823ccbd38b5c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Prefab/Entities/Enemies/Slime/Slime.png"
-dest_files=["res://.godot/imported/Slime.png-8d3ac188f4d471699d49cc7c4b0214e1.ctex"]
+source_file="res://Textures/Entities/Characters/Player/witch-dash.png"
+dest_files=["res://.godot/imported/witch-dash.png-44143a24eec5d803aec9823ccbd38b5c.ctex"]
 
 [params]
 

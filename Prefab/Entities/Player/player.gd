@@ -19,6 +19,7 @@ var fireball = preload("res://Prefab/Entities/Projectiles/fireball.tscn")
 @export var DASH_SPEED : int = 5000
 @export var DASH_DURATION = 0.6
 @export var DASH_TIME_LEFT = 0
+@export var PLAYERHEALTH = 100
 # List of States of the player
 enum State {IDLE, RUN, JUMP, JUMP_START, JUMP_UP, JUMP_FALL, JUMP_END, RECHARGE, DASH, MELEE, MELEE_AIR, BEAM, BEAM_AIR, FIREBALL, BULLET, DOUBLEJUMP}
 # variable to represent current state of player 

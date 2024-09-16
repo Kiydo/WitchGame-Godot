@@ -1,6 +1,6 @@
 [gd_scene load_steps=19 format=3 uid="uid://btrfbgearqgpv"]
 
-[ext_resource type="Texture2D" uid="uid://bo3roxhehp1ac" path="res://Prefab/Entities/Enemies/Skeleton/skeleton.png" id="1_80lwn"]
+[ext_resource type="Texture2D" uid="uid://bo3roxhehp1ac" path="res://Textures/Entities/Characters/Enemies/Skeleton/skeleton.png" id="1_80lwn"]
 [ext_resource type="Script" path="res://Prefab/Entities/Enemies/Skeleton/skeleton.gd" id="2_4sa4s"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_s1pqd"]

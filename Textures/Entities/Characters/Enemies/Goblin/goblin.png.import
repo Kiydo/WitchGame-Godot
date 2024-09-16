@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cjs1khkx4xn51"
-path="res://.godot/imported/witch-fireball.png-a4a6e2efcff29d632c935e117798e43e.ctex"
+uid="uid://do5n2i5q4tqjx"
+path="res://.godot/imported/goblin.png-4d48d511b0684566d89a375bf38bf444.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Prefab/Entities/Player/witch-fireball.png"
-dest_files=["res://.godot/imported/witch-fireball.png-a4a6e2efcff29d632c935e117798e43e.ctex"]
+source_file="res://Textures/Entities/Characters/Enemies/Goblin/goblin.png"
+dest_files=["res://.godot/imported/goblin.png-4d48d511b0684566d89a375bf38bf444.ctex"]
 
 [params]
 

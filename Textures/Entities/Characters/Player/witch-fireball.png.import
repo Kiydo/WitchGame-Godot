@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bkt7ydes5ns3o"
-path="res://.godot/imported/witch-beam-and-charge.png-d8d848bec954ca8382c131dbba1e049f.ctex"
+uid="uid://cjs1khkx4xn51"
+path="res://.godot/imported/witch-fireball.png-414e5575f804fe9283aeb6ea19dc6728.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Prefab/Entities/Player/witch-beam-and-charge.png"
-dest_files=["res://.godot/imported/witch-beam-and-charge.png-d8d848bec954ca8382c131dbba1e049f.ctex"]
+source_file="res://Textures/Entities/Characters/Player/witch-fireball.png"
+dest_files=["res://.godot/imported/witch-fireball.png-414e5575f804fe9283aeb6ea19dc6728.ctex"]
 
 [params]
 

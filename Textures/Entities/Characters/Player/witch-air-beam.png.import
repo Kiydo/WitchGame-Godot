@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bo3roxhehp1ac"
-path="res://.godot/imported/skeleton.png-ce8afe117658af1cb56896b3295c1b09.ctex"
+uid="uid://d3h6n4r3m67m7"
+path="res://.godot/imported/witch-air-beam.png-6a82962340e4c719d272c45cd938f500.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Prefab/Entities/Enemies/Skeleton/skeleton.png"
-dest_files=["res://.godot/imported/skeleton.png-ce8afe117658af1cb56896b3295c1b09.ctex"]
+source_file="res://Textures/Entities/Characters/Player/witch-air-beam.png"
+dest_files=["res://.godot/imported/witch-air-beam.png-6a82962340e4c719d272c45cd938f500.ctex"]
 
 [params]
 

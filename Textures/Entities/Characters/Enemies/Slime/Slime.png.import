@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://do5n2i5q4tqjx"
-path="res://.godot/imported/goblin.png-18a688df075d2b3df9a19fb84710760e.ctex"
+uid="uid://cqxn32uabqrul"
+path="res://.godot/imported/Slime.png-b0952488e2d13d21e536efea9d96213b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Prefab/Entities/Enemies/Goblin/goblin.png"
-dest_files=["res://.godot/imported/goblin.png-18a688df075d2b3df9a19fb84710760e.ctex"]
+source_file="res://Textures/Entities/Characters/Enemies/Slime/Slime.png"
+dest_files=["res://.godot/imported/Slime.png-b0952488e2d13d21e536efea9d96213b.ctex"]
 
 [params]
 

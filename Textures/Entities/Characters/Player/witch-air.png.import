@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cii1laa70i5yp"
-path="res://.godot/imported/witch-air.png-bd6720558ded8d62ae1da17f5067999d.ctex"
+path="res://.godot/imported/witch-air.png-d698d8b25904f7be83ff888ece221f74.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Prefab/Entities/Player/witch-air.png"
-dest_files=["res://.godot/imported/witch-air.png-bd6720558ded8d62ae1da17f5067999d.ctex"]
+source_file="res://Textures/Entities/Characters/Player/witch-air.png"
+dest_files=["res://.godot/imported/witch-air.png-d698d8b25904f7be83ff888ece221f74.ctex"]
 
 [params]
 

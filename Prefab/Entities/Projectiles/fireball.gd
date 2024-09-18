@@ -23,6 +23,7 @@ func _physics_process(delta):
 	#bullet_movement(delta)
 
 func bullet_movement(delta):
+	#print(current_bullet_direction)
 	if current_bullet_direction == 0: # bullet goes right
 		flip_h = false # can just use flip_h due to AnimatedSprite2D already being extended
 		move_local_x(1 * speed * delta)

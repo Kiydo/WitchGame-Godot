@@ -16,9 +16,12 @@ func _physics_process(delta):
 	bullet_movement(delta)
 
 func bullet_movement(delta):
-	if current_bullet_direction == 0: # bullet goes right
+	#print(current_bullet_direction)
+	if current_bullet_direction == null: # bullet goes right
+		#print("bullet going right")
 		move_local_x(1 * speed * delta)
 	if current_bullet_direction == 1: # bullet goes left
+		#print("bullet going left")
 		move_local_x(-1 * speed * delta)
 
 func _on_timer_timeout():

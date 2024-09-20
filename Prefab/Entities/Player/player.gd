@@ -16,10 +16,12 @@ var fireball = preload("res://Prefab/Entities/Projectiles/fireball.tscn")
 # Variables
 @export var PLAYERHEALTH = 100
 # List of States of the player
-enum State {IDLE, RUN, JUMP, JUMP_START, JUMP_UP, JUMP_FALL, JUMP_END, RECHARGE, DASH, MELEE, MELEE_AIR, BEAM, BEAM_AIR, FIREBALL, BULLET, DOUBLEJUMP}
+enum State {IDLE, RUN, JUMP, JUMP_START, JUMP_UP, JUMP_FALL, JUMP_END, RECHARGE, DASH, MELEE_1, MELEE_2, MELEE_AIR, BEAM, BEAM_AIR, FIREBALL, BULLET, DOUBLEJUMP}
+enum ComboState {NONE, MELEE_1, MELEE_2}
 # variable to represent current state of player 
 var current_state : State # to make it static variable to States only
 var animation_trigger = false # to prevent other animations from overiding current animation playing
+var animation_trigger2 = false
 var character_sprite : Sprite2D
 #var can_change_animation = true # So animations can finish
 var is_recharging : bool = false
@@ -29,6 +31,9 @@ var wand_position
 enum Player_direction {RIGHT, LEFT}
 var current_player_direction
 
+var current_combo_state: ComboState = ComboState.NONE
+var combo_timer: Timer = null
+var combo_reset_time: float = 1.0 # time to reset combo if no follow-up attack happens 
 var attack_cooldown : float = 1
 var is_on_cooldown : bool = false
 var is_attacking : bool = false
@@ -38,6 +43,13 @@ var bullet_timer : Timer = null
 func _ready():
 	current_state = State.IDLE
 	animated_sprite_2d.connect("animation_finished", Callable(self, "_on_animation_finished"))
+	animated_sprite_2d_2.connect("animation_finished", Callable(self, "_on_animation_finished2"))
+	
+	combo_timer = Timer.new()
+	combo_timer.wait_time = combo_reset_time
+	combo_timer.one_shot = true
+	add_child(combo_timer)
+	combo_timer.connect("timeout", Callable(self, "_on_combo_reset"))
 	
 	print(hotbar)
 	
@@ -116,68 +128,102 @@ func player_cast_time(this_slot: int, casttime):
 		5:
 			await run_timer(casttime)
 
+func _start_combo_timer():
+	combo_timer.start()
+
+func _on_combo_reset():
+	current_combo_state = ComboState.NONE
 
 # Function for playing sprite animation, ("play" available via AnimationPlayer )
 func player_animations():
+	if animation_trigger2 == false:
+		#print(State)
+		animated_sprite_2d_2.play("nothing")
+	#elif animation_trigger2 == true and current_state != State.RECHARGE:
+		#animated_sprite_2d_2.play("doublejump")
 	match current_state:
 		State.IDLE:
 			if animation_trigger == false:
 				animated_sprite_2d.play("idle")
+				
 		State.RUN:
 			if animation_trigger == false:
 				animated_sprite_2d.play("run")
+				
 		State.JUMP_START:
 			if animation_trigger == false:
 				animation_trigger = true
 				animated_sprite_2d.play("jump_start")
+				
 			
 		State.JUMP_UP:
 			if animation_trigger == false:
 				animated_sprite_2d.play("jump_up")
+			
 		State.JUMP_FALL:
 			if animation_trigger == false:
 				animated_sprite_2d.play("jump_fall")
+				
 		State.JUMP_END:
 			if animation_trigger == false:
 				animation_trigger = true
 				animated_sprite_2d.play("jump_end")
+				
 		State.RECHARGE:
 			if is_recharging == true:
 				animation_trigger = true
+				animation_trigger2 = true
 				animated_sprite_2d.play("recharge")
 				animated_sprite_2d_2.play("recharge")
 		State.DOUBLEJUMP:
-			if is_attacking == false:
+			#animated_sprite_2d_2.play("doublejump")
+			#if is_attacking == false:
+				print("Wads")
 				animation_trigger = true
+				animation_trigger2 = true
 				animated_sprite_2d.play("double_jump")
+				animated_sprite_2d_2.play("doublejump")
 		State.DASH:
 			#if animation_trigger == false:
 				animation_trigger = true
 				animated_sprite_2d.play("dash")
+				
 		State.BULLET:
-			#if animation_trigger == false:
+			#if is_on_floor():
+				#print(current_state)
 				animation_trigger = true
 				animated_sprite_2d.play("bullet")
+				
 		State.FIREBALL:
 			#if animation_trigger == false:
 				animation_trigger = true
 				animated_sprite_2d.play("fireball")
+				
 		State.BEAM:
 			#if animation_trigger == false:
 				animation_trigger = true
 				animated_sprite_2d.play("beam")
+				
 		State.BEAM_AIR:
 			#if animation_trigger == false:
 				animation_trigger = true
 				animated_sprite_2d.play("beam_air")
-		State.MELEE:
+				
+		State.MELEE_1:
 			#if animation_trigger == false:
 				animation_trigger = true
-				animated_sprite_2d.play("melee")
+				animated_sprite_2d.play("melee_1")
+		State.MELEE_2:
+			animation_trigger= true
+			animated_sprite_2d.play("melee_2")
+				
 		State.MELEE_AIR:
 			#if animation_trigger == false:
 				animation_trigger = true
 				animated_sprite_2d.play("melee_air")
+				
 
 func _on_animation_finished():
 	animation_trigger = false
+func _on_animation_finished2():
+	animation_trigger2 = false

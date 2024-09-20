@@ -1,6 +1,6 @@
 extends Node
 
-enum State {IDLE, RUN, JUMP, JUMP_START, JUMP_UP, JUMP_FALL, JUMP_END, RECHARGE, DASH, MELEE, MELEE_AIR, BEAM, BEAM_AIR, FIREBALL, BULLET, DOUBLEJUMP}
+enum State {IDLE, RUN, JUMP, JUMP_START, JUMP_UP, JUMP_FALL, JUMP_END, RECHARGE, DASH, MELEE_1, MELEE_2, MELEE_AIR, BEAM, BEAM_AIR, FIREBALL, BULLET, DOUBLEJUMP}
 @export var GRAVITY : int = 3000
 #@onready var hotbar = $"res://Prefab/Ui/CanvasLayer/bottom/Hotbar"
 
@@ -64,10 +64,18 @@ func player_hotbar(delta : float, player: CharacterBody2D):
 func player_attack(delta : float, player: CharacterBody2D):
 	var direction = player.input_movement() # get current direction of player
 	if Input.is_action_just_pressed("melee") and is_on_cooldown == false:
-		if player.is_on_floor():
-			player.current_state = State.MELEE
-		if !player.is_on_floor():
-			player.current_state = State.MELEE_AIR
+		match player.current_combo_state:
+			player.ComboState.NONE, player.ComboState.MELEE_2:
+				player.current_state = State.MELEE_1
+				player.current_combo_state = player.ComboState.MELEE_1 # switches to combo
+				player._start_combo_timer()
+			
+			player.ComboState.MELEE_1:
+				player.current_state = State.MELEE_2
+				player.current_combo_state = player.ComboState.MELEE_2
+				player._start_combo_timer()
+					
+		
 	if Input.is_action_just_pressed("magic_attack") and current_slot != null and is_on_cooldown == false:
 		is_on_cooldown = true
 		player.is_attacking = true
@@ -124,33 +132,3 @@ func player_attack(delta : float, player: CharacterBody2D):
 					await player.spell_cooldown(magic_beam_cooldown)
 		
 		is_on_cooldown = false
-
-#func player_cast_time(player: CharacterBody2D):
-	#match current_slot:
-		#3:
-			#await player.run_timer(0.1)
-		#4:
-			#await player.run_timer(0.8)
-		#5:
-			#await player.run_timer(4)
-
-#func run_timer(duration: float) -> void:
-	#print("casting time: " )
-	#var bullet_timer = Timer.new()
-	#bullet_timer.wait_time = duration
-	#bullet_timer.one_shot = true
-	#add_child(bullet_timer)
-	#bullet_timer.start()
-	#await bullet_timer.timeout
-	#bullet_timer.queue_free()
-#
-#func spell_cooldown(cooldown: float) -> void:
-	#print("cooldown")
-	#cooldown_timer = Timer.new()
-	#cooldown_timer.one_shot = true
-	#add_child(cooldown_timer)
-	#is_on_cooldown = true
-	#cooldown_timer.wait_time = cooldown
-	#cooldown_timer.start()
-	#await cooldown_timer.timeout
-	#is_on_cooldown = false

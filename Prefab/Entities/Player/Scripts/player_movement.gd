@@ -1,6 +1,6 @@
 extends Node
 
-enum State {IDLE, RUN, JUMP, JUMP_START, JUMP_UP, JUMP_FALL, JUMP_END, RECHARGE, DASH, MELEE, MELEE_AIR, BEAM, BEAM_AIR, FIREBALL, BULLET, DOUBLEJUMP}
+enum State {IDLE, RUN, JUMP, JUMP_START, JUMP_UP, JUMP_FALL, JUMP_END, RECHARGE, DASH, MELEE_1, MELEE_2, MELEE_AIR, BEAM, BEAM_AIR, FIREBALL, BULLET, DOUBLEJUMP}
 
 # Variables
 @export var SPEED : int = 1500
@@ -44,6 +44,7 @@ func player_doublejump(delta : float, player: CharacterBody2D):
 	if Input.is_action_just_pressed("jump") and !player.is_on_floor() and has_doublejumped == false:
 		print("has double jumped")
 		has_jumped = false
+		#player.animation_trigger2 = true
 		player.velocity.y = JUMPFORCE
 		player.current_state = State.DOUBLEJUMP
 		has_doublejumped = true

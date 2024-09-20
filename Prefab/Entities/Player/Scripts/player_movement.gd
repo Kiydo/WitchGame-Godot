@@ -71,6 +71,7 @@ func player_run(delta : float, player: CharacterBody2D, velocity : Vector2):
 func player_dash(delta : float, player: CharacterBody2D, velocity : Vector2):
 	if Input.is_action_just_pressed("dash"):
 		player.current_state = State.DASH
+		player.audio_dash.play() # moved audio player here due to dash state being repeated
 		DASH_TIME_LEFT = DASH_DURATION
 		var direction = 1
 		if player.animated_sprite_2d.flip_h:

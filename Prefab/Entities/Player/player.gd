@@ -5,6 +5,13 @@ extends CharacterBody2D
 @onready var wand : Marker2D = $Wand
 @onready var movement = preload("res://Prefab/Entities/Player/Scripts/player_movement.gd").new()
 @onready var attack = preload("res://Prefab/Entities/Player/Scripts/player_attack.gd").new()
+#SFX
+@onready var audio_jump: AudioStreamPlayer = $AudioManager/Jump
+@onready var audio_doublejump: AudioStreamPlayer = $AudioManager/doublejump
+@onready var audio_dash: AudioStreamPlayer = $AudioManager/dash
+@onready var audio_melee_1: AudioStreamPlayer = $AudioManager/melee1
+@onready var audio_melee_2: AudioStreamPlayer = $AudioManager/melee2
+@onready var audio_jumpland: AudioStreamPlayer = $AudioManager/jumpland
 
 var bullet = preload("res://Prefab/Entities/Projectiles/bullet.tscn")
 var fireball = preload("res://Prefab/Entities/Projectiles/fireball.tscn")
@@ -151,6 +158,7 @@ func player_animations():
 				animated_sprite_2d.play("run")
 				
 		State.JUMP_START:
+			audio_jump.play()
 			if animation_trigger == false:
 				animation_trigger = true
 				animated_sprite_2d.play("jump_start")
@@ -176,6 +184,7 @@ func player_animations():
 				animated_sprite_2d.play("recharge")
 				animated_sprite_2d_2.play("recharge")
 		State.DOUBLEJUMP:
+				audio_doublejump.play()
 			#animated_sprite_2d_2.play("doublejump")
 			#if is_attacking == false:
 				print("Wads")
@@ -184,6 +193,7 @@ func player_animations():
 				animated_sprite_2d.play("double_jump")
 				animated_sprite_2d_2.play("doublejump")
 		State.DASH:
+				
 			#if animation_trigger == false:
 				animation_trigger = true
 				animated_sprite_2d.play("dash")
@@ -211,9 +221,11 @@ func player_animations():
 				
 		State.MELEE_1:
 			#if animation_trigger == false:
+				audio_melee_1.play()
 				animation_trigger = true
 				animated_sprite_2d.play("melee_1")
 		State.MELEE_2:
+			audio_melee_2.play()
 			animation_trigger= true
 			animated_sprite_2d.play("melee_2")
 				

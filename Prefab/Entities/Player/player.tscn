@@ -1,4 +1,4 @@
-[gd_scene load_steps=115 format=3 uid="uid://dsbajyc2cqd5l"]
+[gd_scene load_steps=121 format=3 uid="uid://dsbajyc2cqd5l"]
 
 [ext_resource type="Script" path="res://Prefab/Entities/Player/player.gd" id="1_ee5hq"]
 [ext_resource type="Texture2D" uid="uid://bjnkvavr2uvtd" path="res://Textures/Entities/Characters/Player/WitchMovement.png" id="1_ka56g"]
@@ -13,6 +13,12 @@
 [ext_resource type="Texture2D" uid="uid://dxw25h6sbxk5a" path="res://Textures/Projectiles/PlayerSpells/charging.png" id="7_jklma"]
 [ext_resource type="Texture2D" uid="uid://0tygg8m8ds0p" path="res://Textures/Entities/Characters/Player/witch-attackSpam.png" id="10_lixeg"]
 [ext_resource type="Texture2D" uid="uid://bashc7bxvmvrk" path="res://Textures/Projectiles/PlayerSpells/doublejump-effect.png" id="11_loe44"]
+[ext_resource type="AudioStream" uid="uid://dhftvptshanvw" path="res://Audio/Effects/Player/jump.mp3" id="14_ckgr4"]
+[ext_resource type="AudioStream" uid="uid://dyj4aaj5nxubk" path="res://Audio/Effects/Player/doublejump.mp3" id="15_6avus"]
+[ext_resource type="AudioStream" uid="uid://bu48dky5wghfi" path="res://Audio/Effects/Player/dash.mp3" id="16_quge1"]
+[ext_resource type="AudioStream" uid="uid://bp7ua8t3no0jk" path="res://Audio/Effects/Player/melee1.mp3" id="17_nngie"]
+[ext_resource type="AudioStream" uid="uid://cu3t6x1po5hgy" path="res://Audio/Effects/Player/melee2.mp3" id="18_ddx3f"]
+[ext_resource type="AudioStream" uid="uid://umg3u1hcscet" path="res://Audio/Effects/Player/jumpland.mp3" id="19_txrkv"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3mf02"]
 atlas = ExtResource("2_cyain")
@@ -868,3 +874,31 @@ shape = SubResource("CapsuleShape2D_fihsh")
 
 [node name="Wand" type="Marker2D" parent="."]
 position = Vector2(206, -153)
+
+[node name="AudioManager" type="Node" parent="."]
+
+[node name="Jump" type="AudioStreamPlayer" parent="AudioManager"]
+stream = ExtResource("14_ckgr4")
+volume_db = -15.0
+pitch_scale = 2.0
+bus = &"SFX"
+
+[node name="doublejump" type="AudioStreamPlayer" parent="AudioManager"]
+stream = ExtResource("15_6avus")
+volume_db = -25.0
+bus = &"SFX"
+
+[node name="dash" type="AudioStreamPlayer" parent="AudioManager"]
+stream = ExtResource("16_quge1")
+volume_db = -15.0
+
+[node name="melee1" type="AudioStreamPlayer" parent="AudioManager"]
+stream = ExtResource("17_nngie")
+volume_db = -20.0
+
+[node name="melee2" type="AudioStreamPlayer" parent="AudioManager"]
+stream = ExtResource("18_ddx3f")
+volume_db = -20.0
+
+[node name="jumpland" type="AudioStreamPlayer" parent="AudioManager"]
+stream = ExtResource("19_txrkv")

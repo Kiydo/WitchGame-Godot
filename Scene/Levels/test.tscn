@@ -88,5 +88,7 @@ offset_bottom = 1614.0
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 process_mode = 3
 stream = ExtResource("7_2t0we")
-volume_db = -13.65
+volume_db = -20.0
+autoplay = true
+bus = &"Music"
 parameters/looping = true

@@ -101,7 +101,7 @@ func player_attack(delta : float, player: CharacterBody2D):
 				await player.player_cast_time(current_slot, magic_bullet_casttime)
 				var bullet_instance = bullet.instantiate() as Node2D 
 				
-				print("magic bullet")
+				#print("magic bullet")
 				if player.current_player_direction == player.Player_direction.RIGHT:
 					bullet_instance.current_bullet_direction = current_player_direction
 					player.wand.position.x = player.wand_position.x
@@ -117,7 +117,7 @@ func player_attack(delta : float, player: CharacterBody2D):
 			4: # Fire Ball
 				player.current_state = State.FIREBALL
 				await player.player_cast_time(current_slot, fireball_casttime)
-				print("fire ball")
+				#print("fire ball")
 				var fireball_instance = fireball.instantiate() as Node2D
 				if player.current_player_direction == player.Player_direction.RIGHT:
 					fireball_instance.current_bullet_direction = player.current_player_direction
@@ -125,22 +125,22 @@ func player_attack(delta : float, player: CharacterBody2D):
 				if player.current_player_direction == player.Player_direction.LEFT:
 					fireball_instance.current_bullet_direction = player.current_player_direction
 					player.wand.position.x = -player.wand_position.x
-				print("next")
+				#print("next")
 				fireball_instance.direction = direction
 				fireball_instance.global_position = player.wand.global_position
 				player.get_parent().add_child(fireball_instance)
-				print("shot fireball")
+				#print("shot fireball")
 				await player.spell_cooldown(fireball_cooldown)
 				
 			5: # Magic Beam
 				if !player.is_on_floor():
-					print("beam air")
+					#print("beam air")
 					player.current_state = State.BEAM_AIR
 					await player.player_cast_time(current_slot, magic_beam_casttime)
 					
 					await player.spell_cooldown(magic_beam_cooldown)
 				else:
-					print("beam ground")
+					#print("beam ground")
 					player.current_state = State.BEAM
 					await player.player_cast_time(current_slot, magic_beam_casttime)
 					

@@ -1,4 +1,4 @@
-[gd_scene load_steps=121 format=3 uid="uid://dsbajyc2cqd5l"]
+[gd_scene load_steps=124 format=3 uid="uid://dsbajyc2cqd5l"]
 
 [ext_resource type="Script" path="res://Prefab/Entities/Player/player.gd" id="1_ee5hq"]
 [ext_resource type="Texture2D" uid="uid://bjnkvavr2uvtd" path="res://Textures/Entities/Characters/Player/WitchMovement.png" id="1_ka56g"]
@@ -19,6 +19,9 @@
 [ext_resource type="AudioStream" uid="uid://bp7ua8t3no0jk" path="res://Audio/Effects/Player/melee1.mp3" id="17_nngie"]
 [ext_resource type="AudioStream" uid="uid://cu3t6x1po5hgy" path="res://Audio/Effects/Player/melee2.mp3" id="18_ddx3f"]
 [ext_resource type="AudioStream" uid="uid://umg3u1hcscet" path="res://Audio/Effects/Player/jumpland.mp3" id="19_txrkv"]
+[ext_resource type="AudioStream" uid="uid://c582dpmahgtk4" path="res://Audio/Effects/Player/bullet.mp3" id="20_qx5qw"]
+[ext_resource type="AudioStream" uid="uid://dq2d1p3lxhvhj" path="res://Audio/Effects/Player/fireballcast.mp3" id="21_py23n"]
+[ext_resource type="AudioStream" uid="uid://bfr3504lotvfn" path="res://Audio/Effects/Player/fireball.mp3" id="22_k1rn5"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3mf02"]
 atlas = ExtResource("2_cyain")
@@ -904,3 +907,15 @@ volume_db = -20.0
 
 [node name="jumpland" type="AudioStreamPlayer" parent="AudioManager"]
 stream = ExtResource("19_txrkv")
+
+[node name="bullet" type="AudioStreamPlayer" parent="AudioManager"]
+stream = ExtResource("20_qx5qw")
+volume_db = -20.0
+
+[node name="fireballcast" type="AudioStreamPlayer" parent="AudioManager"]
+stream = ExtResource("21_py23n")
+volume_db = -20.0
+
+[node name="fireball" type="AudioStreamPlayer" parent="AudioManager"]
+stream = ExtResource("22_k1rn5")
+volume_db = -20.0

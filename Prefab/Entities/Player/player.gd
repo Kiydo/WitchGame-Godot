@@ -15,6 +15,9 @@ extends CharacterBody2D
 @onready var audio_melee_1: AudioStreamPlayer = $AudioManager/melee1
 @onready var audio_melee_2: AudioStreamPlayer = $AudioManager/melee2
 @onready var audio_jumpland: AudioStreamPlayer = $AudioManager/jumpland
+@onready var audio_bullet: AudioStreamPlayer = $AudioManager/bullet
+@onready var audio_fireballcast: AudioStreamPlayer = $AudioManager/fireballcast
+@onready var audio_fireball: AudioStreamPlayer = $AudioManager/fireball
 
 var bullet = preload("res://Prefab/Entities/Projectiles/bullet.tscn")
 var fireball = preload("res://Prefab/Entities/Projectiles/fireball.tscn")
@@ -104,10 +107,10 @@ func on_timer_timeout():
 
 func run_timer(duration: float) -> void:
 	if bullet_timer !=null:
-		print("Timer already running")
+		#print("Timer already running")
 		return
 	
-	print("casting time: " )
+	#print("casting time: " )
 	bullet_timer = Timer.new()
 	bullet_timer.wait_time = duration
 	bullet_timer.one_shot = true
@@ -120,7 +123,7 @@ func run_timer(duration: float) -> void:
 	bullet_timer.timeout.connect(on_timer_timeout) 
 
 func spell_cooldown(cooldown: float) -> void:
-	print("cooldown")
+	#print("cooldown")
 	cooldown_timer = Timer.new()
 	cooldown_timer.one_shot = true
 	add_child(cooldown_timer)
@@ -191,7 +194,7 @@ func player_animations():
 				audio_doublejump.play()
 			#animated_sprite_2d_2.play("doublejump")
 			#if is_attacking == false:
-				print("Wads")
+				#print("Wads")
 				animation_trigger = true
 				animation_trigger2 = true
 				animated_sprite_2d.play("double_jump")
@@ -203,15 +206,18 @@ func player_animations():
 				animated_sprite_2d.play("dash")
 				
 		State.BULLET:
+				audio_bullet.play()
 			#if is_on_floor():
 				#print(current_state)
 				animation_trigger = true
 				animated_sprite_2d.play("bullet")
 				
 		State.FIREBALL:
+				audio_fireballcast.play()
 			#if animation_trigger == false:
 				animation_trigger = true
 				animated_sprite_2d.play("fireball")
+				audio_fireball.play()
 				
 		State.BEAM:
 			#if animation_trigger == false:

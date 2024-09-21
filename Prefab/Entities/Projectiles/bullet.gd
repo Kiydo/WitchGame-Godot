@@ -1,5 +1,9 @@
 extends AnimatedSprite2D
 
+var bullet_impact_effect = preload("res://Prefab/Entities/Projectiles/bullet_impact_effect.tscn")
+
+@export var BULLETDAMAGE = 5
+
 enum Bullet_direction {LEFT, RIGHT}
 
 var current_bullet_direction
@@ -24,5 +28,26 @@ func bullet_movement(delta):
 		#print("bullet going left")
 		move_local_x(-1 * speed * delta)
 
+func get_damage_amount() -> int:
+	return BULLETDAMAGE
+
 func _on_timer_timeout():
 	queue_free() # deletes bullet
+
+
+func _on_hurtbox_area_entered(area: Area2D) -> void:
+	print("bullet area entered")
+	bullet_impact()
+
+
+func _on_hurtbox_body_entered(body: Node2D) -> void:
+	print("bullet entered body")
+	bullet_impact()
+	
+	
+func bullet_impact():
+	print("impacting bullet")
+	var bullet_impact_effect_instance = bullet_impact_effect.instantiate() as Node2D
+	bullet_impact_effect_instance.global_position = global_position
+	get_parent().add_child(bullet_impact_effect_instance)
+	queue_free()

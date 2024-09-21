@@ -6,7 +6,10 @@ extends CharacterBody2D
 @export var patrol_points : Node # gets the patrol points node after assigning from inspector
 @export var GRAVITY : int = 3000
 @export var SPEED = 15000
+@export var HEALTH = 10
 #@export var wait_time : int = 3
+
+var enemy_death_effect = preload("res://Prefab/Entities/Enemies/enemy_death_effect.tscn")
 
 enum State {IDLE, WALK, ATTACK}
 var current_state : State
@@ -94,6 +97,20 @@ func enemy_animations():
 			animated_sprite_2d.play("attack")
 
 
+
 #func _on_timer_timeout() -> void:
 	#can_walk = true
 	#can_flip_sprite = true
+
+
+func _on_hurtbox_area_entered(area: Area2D) -> void:
+	print("hurtbox area enetered")
+	if area.get_parent().has_method("get_damage_amount"):
+		var node = area.get_parent() as Node
+		HEALTH -= node.BULLETDAMAGE
+		print("health: ", HEALTH)
+		if HEALTH <= 0:
+			var enemy_death_effect_instance = enemy_death_effect.instantiate() as Node2D
+			enemy_death_effect_instance.global_position = global_position
+			get_parent().add_child(enemy_death_effect_instance)
+			queue_free()

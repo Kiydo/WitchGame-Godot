@@ -1,11 +1,13 @@
 extends Node
 
 enum State {IDLE, RUN, JUMP, JUMP_START, JUMP_UP, JUMP_FALL, JUMP_END, RECHARGE, DASH, MELEE_1, MELEE_2, MELEE_AIR, BEAM, BEAM_AIR, FIREBALL, BULLET, DOUBLEJUMP}
+enum Melee_direction {LEFT, RIGHT}
 @export var GRAVITY : int = 3000
 #@onready var hotbar = $"res://Prefab/Ui/CanvasLayer/bottom/Hotbar"
 
 var bullet = preload("res://Prefab/Entities/Projectiles/bullet.tscn")
 var fireball = preload("res://Prefab/Entities/Projectiles/fireball.tscn")
+var melee_hitbox = preload("res://Prefab/Entities/Player/player_melee_hit_box.tscn")
 #@onready var wand : Marker2D = $Wand
 
 var current_slot # index for a, s, d = 3,4,5
@@ -60,21 +62,34 @@ func player_hotbar(delta : float, player: CharacterBody2D):
 		player.hotbar.select(current_slot)
 		print(current_slot)
 
+func spawn_melee_hitbox(player: CharacterBody2D):
+	var melee_hitbox_instance = melee_hitbox.instantiate() as Node2D
+	if player.current_player_direction == player.Player_direction.RIGHT:
+		melee_hitbox_instance.current_melee_direction = current_player_direction
+		player.wand.position.x = player.wand_position.x + 60 # readjust for melee hitbox
+	elif player.current_player_direction == player.Player_direction.LEFT:
+		melee_hitbox_instance.current_melee_direction = player.current_player_direction
+		player.wand.position.x = -player.wand_position.x + 210
+	
+	#melee_hitbox_instance.direction = player.current_player_direction
+	melee_hitbox_instance.global_position = player.wand.global_position
+	player.get_parent().add_child(melee_hitbox_instance)
 
 func player_attack(delta : float, player: CharacterBody2D):
 	var direction = player.input_movement() # get current direction of player
 	if Input.is_action_just_pressed("melee") and is_on_cooldown == false:
 		match player.current_combo_state:
 			player.ComboState.NONE, player.ComboState.MELEE_2:
+				spawn_melee_hitbox(player)
 				player.current_state = State.MELEE_1
 				player.current_combo_state = player.ComboState.MELEE_1 # switches to combo
 				player._start_combo_timer()
 			
 			player.ComboState.MELEE_1:
+				spawn_melee_hitbox(player)
 				player.current_state = State.MELEE_2
 				player.current_combo_state = player.ComboState.MELEE_2
 				player._start_combo_timer()
-					
 		
 	if Input.is_action_just_pressed("magic_attack") and current_slot != null and is_on_cooldown == false:
 		is_on_cooldown = true

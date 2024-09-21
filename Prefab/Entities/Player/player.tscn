@@ -856,8 +856,10 @@ script = ExtResource("1_ee5hq")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -92)
 sprite_frames = SubResource("SpriteFrames_ci5gw")
-animation = &"double_jump"
+animation = &"melee_2"
 autoplay = "idle"
+frame = 1
+frame_progress = 1.0
 
 [node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="AnimatedSprite2D"]
 z_index = -1
@@ -879,7 +881,7 @@ position = Vector2(206, -153)
 
 [node name="Jump" type="AudioStreamPlayer" parent="AudioManager"]
 stream = ExtResource("14_ckgr4")
-volume_db = -15.0
+volume_db = -25.0
 pitch_scale = 2.0
 bus = &"SFX"
 

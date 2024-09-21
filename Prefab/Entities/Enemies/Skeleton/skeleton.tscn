@@ -113,10 +113,10 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b0jbt"]
-size = Vector2(279, 308)
+size = Vector2(175, 308)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_16ehy"]
-size = Vector2(137, 56)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ewmb4"]
+size = Vector2(228, 332)
 
 [node name="Skeleton" type="CharacterBody2D"]
 position = Vector2(0, -92)
@@ -130,16 +130,21 @@ autoplay = "idle"
 frame_progress = 0.0734726
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(31.5, -62)
+position = Vector2(-20.5, -62)
 shape = SubResource("RectangleShape2D_b0jbt")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
-visible = false
-position = Vector2(136.5, 4)
-shape = SubResource("RectangleShape2D_16ehy")
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 3.0
 autostart = true
 
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(-21, -68)
+shape = SubResource("RectangleShape2D_ewmb4")
+debug_color = Color(0.950597, 1.2514e-06, 0.567818, 0.42)
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]

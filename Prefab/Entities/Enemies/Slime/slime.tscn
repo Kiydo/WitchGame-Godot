@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://tltqhuwcldj8"]
+[gd_scene load_steps=14 format=3 uid="uid://tltqhuwcldj8"]
 
 [ext_resource type="Texture2D" uid="uid://cqxn32uabqrul" path="res://Textures/Entities/Characters/Enemies/Slime/Slime.png" id="1_6jogi"]
 [ext_resource type="Script" path="res://Prefab/Entities/Enemies/Slime/slime.gd" id="1_ntrps"]
@@ -70,6 +70,9 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_epqah"]
 size = Vector2(298, 204)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dbh20"]
+size = Vector2(368, 246)
+
 [node name="Slime" type="CharacterBody2D"]
 position = Vector2(0, -92)
 script = ExtResource("1_ntrps")
@@ -81,5 +84,16 @@ autoplay = "walk"
 frame_progress = 0.245421
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-44, -10)
+position = Vector2(-29, -11)
 shape = SubResource("RectangleShape2D_epqah")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(-19, -32)
+shape = SubResource("RectangleShape2D_dbh20")
+debug_color = Color(0.940912, 1.11663e-05, 0.612921, 0.42)
+
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]

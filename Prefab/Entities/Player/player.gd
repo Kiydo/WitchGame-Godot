@@ -5,6 +5,9 @@ extends CharacterBody2D
 @onready var wand : Marker2D = $Wand
 @onready var movement = preload("res://Prefab/Entities/Player/Scripts/player_movement.gd").new()
 @onready var attack = preload("res://Prefab/Entities/Player/Scripts/player_attack.gd").new()
+#@onready var melee_hitbox: Area2D = $MeleeHitbox
+@onready var attack_duration : float = 0.1
+
 #SFX
 @onready var audio_jump: AudioStreamPlayer = $AudioManager/Jump
 @onready var audio_doublejump: AudioStreamPlayer = $AudioManager/doublejump
@@ -51,6 +54,7 @@ func _ready():
 	current_state = State.IDLE
 	animated_sprite_2d.connect("animation_finished", Callable(self, "_on_animation_finished"))
 	animated_sprite_2d_2.connect("animation_finished", Callable(self, "_on_animation_finished2"))
+	#melee_hitbox.connect("body_entered", Callable(self, "_on_melee_hitbox_body_entered"))
 	
 	combo_timer = Timer.new()
 	combo_timer.wait_time = combo_reset_time

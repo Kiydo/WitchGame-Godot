@@ -1,8 +1,11 @@
 extends AnimatedSprite2D
 @onready var cast_time: Timer = $Cast_Time
 
-enum Bullet_direction {LEFT, RIGHT}
+@export var BULLETDAMAGE = 20
 
+var bullet_impact_effect = preload("res://Prefab/Entities/Enemies/enemy_death_effect.tscn")
+
+enum Bullet_direction {LEFT, RIGHT}
 var current_bullet_direction
 var speed : int = 2800
 var direction : int
@@ -34,3 +37,22 @@ func bullet_movement(delta):
 
 func _on_timer_timeout():
 	queue_free() # deletes bullet
+
+func get_damage_amount():
+	return BULLETDAMAGE
+
+func _on_hitbox_area_entered(area: Area2D) -> void:
+	print("fireball area entered")
+	bullet_impact()
+
+
+func _on_hitbox_body_entered(body: Node2D) -> void:
+	print("fireball entered body")
+	bullet_impact()
+	
+func bullet_impact():
+	print("impacting bullet")
+	var bullet_impact_effect_instance = bullet_impact_effect.instantiate() as Node2D
+	bullet_impact_effect_instance.global_position = global_position
+	get_parent().add_child(bullet_impact_effect_instance)
+	queue_free()

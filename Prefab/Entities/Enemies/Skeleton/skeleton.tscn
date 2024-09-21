@@ -1,7 +1,12 @@
-[gd_scene load_steps=19 format=3 uid="uid://btrfbgearqgpv"]
+[gd_scene load_steps=26 format=3 uid="uid://btrfbgearqgpv"]
 
 [ext_resource type="Texture2D" uid="uid://bo3roxhehp1ac" path="res://Textures/Entities/Characters/Enemies/Skeleton/skeleton.png" id="1_80lwn"]
 [ext_resource type="Script" path="res://Prefab/Entities/Enemies/Skeleton/skeleton.gd" id="2_4sa4s"]
+[ext_resource type="Script" path="res://Prefab/Entities/Enemies/Scripts/node_state_machine.gd" id="3_ayq08"]
+[ext_resource type="Script" path="res://Prefab/Entities/Enemies/Skeleton/state_machine_controller.gd" id="3_eif3j"]
+[ext_resource type="Script" path="res://Prefab/Entities/Enemies/Scripts/idle_state.gd" id="4_xgwbg"]
+[ext_resource type="Script" path="res://Prefab/Entities/Enemies/Scripts/attack_state.gd" id="5_23arg"]
+[ext_resource type="Script" path="res://Prefab/Entities/Enemies/Scripts/walk_state.gd" id="6_hqowq"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_s1pqd"]
 atlas = ExtResource("1_80lwn")
@@ -118,16 +123,22 @@ size = Vector2(175, 308)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ewmb4"]
 size = Vector2(228, 332)
 
-[node name="Skeleton" type="CharacterBody2D"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_4cvho"]
+radius = 565.51
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3kc2y"]
+size = Vector2(2178, 664)
+
+[node name="Skeleton" type="CharacterBody2D" groups=["Skeleton"]]
 position = Vector2(0, -92)
+collision_layer = 4
 script = ExtResource("2_4sa4s")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_8yss3")
-animation = &"idle"
+animation = &"attack"
 autoplay = "idle"
-frame_progress = 0.0734726
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-20.5, -62)
@@ -146,5 +157,52 @@ position = Vector2(-21, -68)
 shape = SubResource("RectangleShape2D_ewmb4")
 debug_color = Color(0.950597, 1.2514e-06, 0.567818, 0.42)
 
+[node name="StateMachineController" type="Node" parent="." node_paths=PackedStringArray("node_state_machine")]
+script = ExtResource("3_eif3j")
+node_state_machine = NodePath("../StateMachine")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_node_state")]
+script = ExtResource("3_ayq08")
+initial_node_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body_2d", "animated_sprite_2d")]
+script = ExtResource("4_xgwbg")
+character_body_2d = NodePath("../..")
+animated_sprite_2d = NodePath("../../AnimatedSprite2D")
+slow_down_speed = 8000
+
+[node name="Attack" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body_2d", "animated_sprite_2d")]
+script = ExtResource("5_23arg")
+character_body_2d = NodePath("../..")
+animated_sprite_2d = NodePath("../../AnimatedSprite2D")
+SPEED = 400
+
+[node name="Walk" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body_2d", "animated_sprite_2d")]
+script = ExtResource("6_hqowq")
+character_body_2d = NodePath("../..")
+animated_sprite_2d = NodePath("../../AnimatedSprite2D")
+SPEED = 1500
+
+[node name="AttackArea2D" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea2D"]
+shape = SubResource("CircleShape2D_4cvho")
+debug_color = Color(0.813809, 0.405565, 0.131422, 0.42)
+
+[node name="DetectionArea2D" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea2D"]
+position = Vector2(-26, -149)
+shape = SubResource("RectangleShape2D_3kc2y")
+debug_color = Color(0.349646, 0.618264, 0.108688, 0.42)
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
+[connection signal="body_entered" from="AttackArea2D" to="StateMachineController" method="_on_attack_area_2d_body_entered"]
+[connection signal="body_exited" from="AttackArea2D" to="StateMachineController" method="_on_attack_area_2d_body_exited"]
+[connection signal="body_entered" from="DetectionArea2D" to="StateMachineController" method="_on_detection_area_2d_body_entered"]
+[connection signal="body_exited" from="DetectionArea2D" to="StateMachineController" method="_on_detection_area_2d_body_exited"]

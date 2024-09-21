@@ -52,18 +52,16 @@ offset = Vector2(3840, -1280)
 
 [node name="Enemies" type="Node" parent="."]
 
-[node name="Skeleton" parent="Enemies" node_paths=PackedStringArray("patrol_points") instance=ExtResource("4_cjar6")]
-position = Vector2(1121, -214)
-patrol_points = NodePath("PatrolPoints")
-SPEED = 10000
+[node name="Skeleton" parent="Enemies" instance=ExtResource("4_cjar6")]
+position = Vector2(4465, -330)
 
 [node name="PatrolPoints" type="Node2D" parent="Enemies/Skeleton"]
 
 [node name="Point1" type="Marker2D" parent="Enemies/Skeleton/PatrolPoints"]
-position = Vector2(-653, 302)
+position = Vector2(-965, 198)
 
 [node name="Point2" type="Marker2D" parent="Enemies/Skeleton/PatrolPoints"]
-position = Vector2(1918, 270)
+position = Vector2(766, 198)
 
 [node name="Slime" parent="Enemies" node_paths=PackedStringArray("patrol_points") instance=ExtResource("5_pqrpi")]
 position = Vector2(-1090, -489)

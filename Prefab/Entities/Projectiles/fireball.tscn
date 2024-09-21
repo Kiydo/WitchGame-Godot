@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cgtnsgybya8bn"]
+[gd_scene load_steps=17 format=3 uid="uid://cgtnsgybya8bn"]
 
 [ext_resource type="Texture2D" uid="uid://bru4flmmaulos" path="res://Textures/Projectiles/PlayerSpells/lightball.png" id="1_prnu1"]
 [ext_resource type="Script" path="res://Prefab/Entities/Projectiles/fireball.gd" id="2_02ylq"]
@@ -100,6 +100,9 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c11rg"]
+size = Vector2(600, 131)
+
 [node name="Fireball" type="AnimatedSprite2D"]
 sprite_frames = SubResource("SpriteFrames_43iqa")
 animation = &"fireball"
@@ -115,4 +118,14 @@ autostart = true
 
 [node name="Cast_Time" type="Timer" parent="."]
 
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(0, -51.5)
+shape = SubResource("RectangleShape2D_c11rg")
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]

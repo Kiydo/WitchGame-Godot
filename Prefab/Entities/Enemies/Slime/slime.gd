@@ -101,7 +101,11 @@ func enemy_animations():
 #func _on_timer_timeout() -> void:
 	#can_walk = true
 	#can_flip_sprite = true
-
+func enemy_health():
+	var enemy_death_effect_instance = enemy_death_effect.instantiate() as Node2D
+	enemy_death_effect_instance.global_position = global_position
+	get_parent().add_child(enemy_death_effect_instance)
+	queue_free()
 
 func _on_hurtbox_area_entered(area: Area2D) -> void:
 	print("hurtbox area enetered")
@@ -110,7 +114,9 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 		HEALTH -= node.BULLETDAMAGE
 		print("health: ", HEALTH)
 		if HEALTH <= 0:
-			var enemy_death_effect_instance = enemy_death_effect.instantiate() as Node2D
-			enemy_death_effect_instance.global_position = global_position
-			get_parent().add_child(enemy_death_effect_instance)
-			queue_free()
+			enemy_health()
+	elif area.has_method("get_damage_amount"):
+		HEALTH -= area.BULLETDAMAGE
+		print("health: ", HEALTH)
+		if HEALTH <= 0:
+			enemy_health()

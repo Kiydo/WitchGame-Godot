@@ -14,11 +14,18 @@ func on_physics_process(delta : float):
 	enemy_gravity(delta)
 	var direction : int
 	
-	if character_body_2d.global_position > player.global_position:
+	if character_body_2d.global_position > player.global_position and !character_body_2d.is_in_group("Slime"):
 		animated_sprite_2d.flip_h = true
 		direction = -1
-	elif character_body_2d.global_position < player.global_position:
+	elif character_body_2d.global_position < player.global_position and !character_body_2d.is_in_group("Slime"):
 		animated_sprite_2d.flip_h = false
+		direction = 1
+	# Below strictly for slime because of sprite default faceing
+	elif character_body_2d.global_position > player.global_position and character_body_2d.is_in_group("Slime"):
+		animated_sprite_2d.flip_h = false
+		direction = -1
+	elif character_body_2d.global_position < player.global_position and character_body_2d.is_in_group("Slime"):
+		animated_sprite_2d.flip_h = true
 		direction = 1
 
 	animated_sprite_2d.play("walk")

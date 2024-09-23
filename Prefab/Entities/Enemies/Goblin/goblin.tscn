@@ -1,5 +1,6 @@
-[gd_scene load_steps=23 format=3 uid="uid://gkslhjhdxvi3"]
+[gd_scene load_steps=24 format=3 uid="uid://gkslhjhdxvi3"]
 
+[ext_resource type="Script" path="res://Prefab/Entities/Enemies/Goblin/goblin.gd" id="1_5ml6g"]
 [ext_resource type="Texture2D" uid="uid://do5n2i5q4tqjx" path="res://Textures/Entities/Characters/Enemies/Goblin/goblin.png" id="1_8us2i"]
 [ext_resource type="Script" path="res://Prefab/Entities/Enemies/Goblin/state_machine_controller.gd" id="2_12f7w"]
 [ext_resource type="Script" path="res://Prefab/Entities/Enemies/Scripts/node_state_machine.gd" id="2_fvok6"]
@@ -122,6 +123,7 @@ size = Vector2(6186, 2300)
 [node name="Goblin" type="CharacterBody2D" groups=["Goblin"]]
 position = Vector2(8, -92)
 collision_layer = 4
+script = ExtResource("1_5ml6g")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_gd1sd")
@@ -184,6 +186,7 @@ character_body_2d = NodePath("../..")
 animated_sprite_2d = NodePath("../../AnimatedSprite2D")
 SPEED = 1500
 
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
 [connection signal="body_entered" from="AttackArea2D" to="StateMachineController" method="_on_attack_area_2d_body_entered"]
 [connection signal="body_exited" from="AttackArea2D" to="StateMachineController" method="_on_attack_area_2d_body_exited"]
 [connection signal="body_entered" from="DetectionArea2D" to="StateMachineController" method="_on_detection_area_2d_body_entered"]

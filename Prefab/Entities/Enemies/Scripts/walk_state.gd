@@ -38,7 +38,14 @@ func enemy_gravity(delta: float):
 	character_body_2d.velocity.y += GRAVITY * delta
 
 func enter():
-	player = get_tree().get_nodes_in_group("Player")[0] as CharacterBody2D
+	if is_inside_tree() and get_tree() != null:
+		var players = get_tree().get_nodes_in_group("Player")
+		if players.size() > 0:
+			player = players[0] as CharacterBody2D
+		else:
+			print("No players found in the group.")
+	else:
+		print("Node is not inside the scene tree or get_tree() is null.")
 
 func exit():
 	pass

@@ -50,6 +50,7 @@ radius = 62.0322
 [node name="EnemyBullet" type="AnimatedSprite2D"]
 sprite_frames = SubResource("SpriteFrames_ulvie")
 animation = &"bullet"
+autoplay = "bullet"
 frame_progress = 0.633133
 script = ExtResource("2_v54hx")
 

@@ -36,15 +36,14 @@ animations = [{
 "texture": null
 }],
 "loop": false,
-"name": &"new_animation",
+"name": &"impact",
 "speed": 15.0
 }]
 
 [node name="enemy_bullet_impact_effect" type="AnimatedSprite2D"]
 sprite_frames = SubResource("SpriteFrames_vxij2")
-animation = &"new_animation"
-frame = 3
-frame_progress = 1.0
+animation = &"impact"
+autoplay = "impact"
 script = ExtResource("2_uqkrn")
 
 [node name="Timer" type="Timer" parent="."]

@@ -1,0 +1,190 @@
+[gd_scene load_steps=23 format=3 uid="uid://gkslhjhdxvi3"]
+
+[ext_resource type="Texture2D" uid="uid://do5n2i5q4tqjx" path="res://Textures/Entities/Characters/Enemies/Goblin/goblin.png" id="1_8us2i"]
+[ext_resource type="Script" path="res://Prefab/Entities/Enemies/Goblin/state_machine_controller.gd" id="2_12f7w"]
+[ext_resource type="Script" path="res://Prefab/Entities/Enemies/Scripts/node_state_machine.gd" id="2_fvok6"]
+[ext_resource type="Script" path="res://Prefab/Entities/Enemies/Scripts/idle_state.gd" id="3_xlf6p"]
+[ext_resource type="Script" path="res://Prefab/Entities/Enemies/Scripts/attack_state.gd" id="4_esvhi"]
+[ext_resource type="Script" path="res://Prefab/Entities/Enemies/Scripts/walk_state.gd" id="5_o7bcn"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vt3tw"]
+atlas = ExtResource("1_8us2i")
+region = Rect2(2000, 1000, 1000, 1000)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tbm7m"]
+atlas = ExtResource("1_8us2i")
+region = Rect2(3000, 1000, 1000, 1000)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5jdmq"]
+atlas = ExtResource("1_8us2i")
+region = Rect2(0, 2000, 1000, 1000)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ykwq2"]
+atlas = ExtResource("1_8us2i")
+region = Rect2(1000, 2000, 1000, 1000)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nnp4w"]
+atlas = ExtResource("1_8us2i")
+region = Rect2(2000, 2000, 1000, 1000)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jwh45"]
+atlas = ExtResource("1_8us2i")
+region = Rect2(0, 0, 1000, 1000)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1i300"]
+atlas = ExtResource("1_8us2i")
+region = Rect2(1000, 0, 1000, 1000)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3l777"]
+atlas = ExtResource("1_8us2i")
+region = Rect2(2000, 0, 1000, 1000)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bjkmf"]
+atlas = ExtResource("1_8us2i")
+region = Rect2(3000, 0, 1000, 1000)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jqsfk"]
+atlas = ExtResource("1_8us2i")
+region = Rect2(2000, 0, 1000, 1000)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_knu3u"]
+atlas = ExtResource("1_8us2i")
+region = Rect2(0, 1000, 1000, 1000)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gd1sd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vt3tw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tbm7m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5jdmq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ykwq2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nnp4w")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 8.0,
+"texture": SubResource("AtlasTexture_jwh45")
+}, {
+"duration": 0.3,
+"texture": SubResource("AtlasTexture_1i300")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3l777")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bjkmf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jqsfk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_knu3u")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 6.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0i7dl"]
+size = Vector2(219, 336)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dj2c4"]
+size = Vector2(244, 349)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ddb6a"]
+size = Vector2(5150, 1361)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qly8n"]
+size = Vector2(6186, 2300)
+
+[node name="Goblin" type="CharacterBody2D" groups=["Goblin"]]
+position = Vector2(8, -92)
+collision_layer = 4
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_gd1sd")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-11.5, -76)
+shape = SubResource("RectangleShape2D_0i7dl")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(-7, -82.5)
+shape = SubResource("RectangleShape2D_dj2c4")
+debug_color = Color(0.95774, 0, 0.53094, 0.42)
+
+[node name="AttackArea2D" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea2D"]
+position = Vector2(3, -589.5)
+shape = SubResource("RectangleShape2D_ddb6a")
+debug_color = Color(0.623175, 0.533003, 7.70092e-07, 0.42)
+
+[node name="DetectionArea2D" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea2D"]
+position = Vector2(-4, -587)
+shape = SubResource("RectangleShape2D_qly8n")
+
+[node name="StateMachineController" type="Node" parent="." node_paths=PackedStringArray("node_state_machine")]
+script = ExtResource("2_12f7w")
+node_state_machine = NodePath("../StateMachine")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_node_state")]
+script = ExtResource("2_fvok6")
+initial_node_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body_2d", "animated_sprite_2d")]
+script = ExtResource("3_xlf6p")
+character_body_2d = NodePath("../..")
+animated_sprite_2d = NodePath("../../AnimatedSprite2D")
+slow_down_speed = 8000
+
+[node name="Attack" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body_2d", "animated_sprite_2d")]
+script = ExtResource("4_esvhi")
+character_body_2d = NodePath("../..")
+animated_sprite_2d = NodePath("../../AnimatedSprite2D")
+SPEED = 400
+
+[node name="Walk" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body_2d", "animated_sprite_2d")]
+script = ExtResource("5_o7bcn")
+character_body_2d = NodePath("../..")
+animated_sprite_2d = NodePath("../../AnimatedSprite2D")
+SPEED = 1500
+
+[connection signal="body_entered" from="AttackArea2D" to="StateMachineController" method="_on_attack_area_2d_body_entered"]
+[connection signal="body_exited" from="AttackArea2D" to="StateMachineController" method="_on_attack_area_2d_body_exited"]
+[connection signal="body_entered" from="DetectionArea2D" to="StateMachineController" method="_on_detection_area_2d_body_entered"]
+[connection signal="body_exited" from="DetectionArea2D" to="StateMachineController" method="_on_detection_area_2d_body_exited"]

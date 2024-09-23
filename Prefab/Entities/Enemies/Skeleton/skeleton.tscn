@@ -127,7 +127,7 @@ size = Vector2(228, 332)
 size = Vector2(701, 424)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3kc2y"]
-size = Vector2(3805, 597)
+size = Vector2(4970, 1017)
 
 [node name="Skeleton" type="CharacterBody2D" groups=["Skeleton"]]
 position = Vector2(0, -92)
@@ -198,7 +198,7 @@ collision_layer = 8
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea2D"]
-position = Vector2(-17.5, -115.5)
+position = Vector2(1, -325.5)
 shape = SubResource("RectangleShape2D_3kc2y")
 debug_color = Color(0.349646, 0.618264, 0.108688, 0.42)
 

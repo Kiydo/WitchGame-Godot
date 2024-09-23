@@ -1,4 +1,4 @@
-[gd_scene load_steps=124 format=3 uid="uid://dsbajyc2cqd5l"]
+[gd_scene load_steps=125 format=3 uid="uid://dsbajyc2cqd5l"]
 
 [ext_resource type="Script" path="res://Prefab/Entities/Player/player.gd" id="1_ee5hq"]
 [ext_resource type="Texture2D" uid="uid://bjnkvavr2uvtd" path="res://Textures/Entities/Characters/Player/WitchMovement.png" id="1_ka56g"]
@@ -852,6 +852,10 @@ animations = [{
 radius = 60.0
 height = 318.0
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4ebrr"]
+radius = 72.0
+height = 346.0
+
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_layer = 2
 script = ExtResource("1_ee5hq")
@@ -859,10 +863,10 @@ script = ExtResource("1_ee5hq")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -92)
 sprite_frames = SubResource("SpriteFrames_ci5gw")
-animation = &"melee_2"
+animation = &"run"
 autoplay = "idle"
 frame = 1
-frame_progress = 1.0
+frame_progress = 0.477217
 
 [node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="AnimatedSprite2D"]
 z_index = -1
@@ -874,7 +878,7 @@ frame = 3
 frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-2, -162)
+position = Vector2(-2, -158)
 shape = SubResource("CapsuleShape2D_fihsh")
 
 [node name="Wand" type="Marker2D" parent="."]
@@ -919,3 +923,12 @@ volume_db = -20.0
 [node name="fireball" type="AudioStreamPlayer" parent="AudioManager"]
 stream = ExtResource("22_k1rn5")
 volume_db = -20.0
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(-5, -173)
+shape = SubResource("CapsuleShape2D_4ebrr")
+debug_color = Color(0.431518, 0.457382, 1, 0.42)

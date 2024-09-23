@@ -1,0 +1,55 @@
+[gd_scene load_steps=7 format=3 uid="uid://dnnvaoua46f14"]
+
+[ext_resource type="Texture2D" uid="uid://dil7wnm8q4sdm" path="res://Textures/Projectiles/EnemySpells/enemy-hiteffect.png" id="1_he1ii"]
+[ext_resource type="Script" path="res://Prefab/Entities/Projectiles/enemy_bullet_impact_effect.gd" id="2_uqkrn"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0d3no"]
+atlas = ExtResource("1_he1ii")
+region = Rect2(0, 0, 1000, 1000)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_de84l"]
+atlas = ExtResource("1_he1ii")
+region = Rect2(1000, 0, 1000, 1000)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qv6f1"]
+atlas = ExtResource("1_he1ii")
+region = Rect2(0, 1000, 1000, 1000)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vxij2"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0d3no")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_de84l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qv6f1")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"new_animation",
+"speed": 15.0
+}]
+
+[node name="enemy_bullet_impact_effect" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_vxij2")
+animation = &"new_animation"
+frame = 3
+frame_progress = 1.0
+script = ExtResource("2_uqkrn")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.4
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

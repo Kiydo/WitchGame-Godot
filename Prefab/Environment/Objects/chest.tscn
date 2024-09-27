@@ -1,0 +1,106 @@
+[gd_scene load_steps=13 format=3 uid="uid://dxuyygvkywgjv"]
+
+[ext_resource type="Script" path="res://Prefab/Environment/Objects/chest.gd" id="1_qnp2g"]
+[ext_resource type="Texture2D" uid="uid://cn71d4tuhu6nk" path="res://Textures/Environment/Objects/chest.png" id="1_sba8v"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vmivo"]
+atlas = ExtResource("1_sba8v")
+region = Rect2(1000, 0, 1000, 1000)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d3h74"]
+atlas = ExtResource("1_sba8v")
+region = Rect2(1000, 0, 1000, 1000)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i4vhg"]
+atlas = ExtResource("1_sba8v")
+region = Rect2(2000, 0, 1000, 1000)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yt6g4"]
+atlas = ExtResource("1_sba8v")
+region = Rect2(0, 1000, 1000, 1000)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6rgfn"]
+atlas = ExtResource("1_sba8v")
+region = Rect2(1000, 1000, 1000, 1000)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ub3ii"]
+atlas = ExtResource("1_sba8v")
+region = Rect2(2000, 1000, 1000, 1000)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bwnos"]
+atlas = ExtResource("1_sba8v")
+region = Rect2(2000, 1000, 1000, 1000)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_e7vn3"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vmivo")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d3h74")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i4vhg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yt6g4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6rgfn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ub3ii")
+}],
+"loop": false,
+"name": &"open",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bwnos")
+}],
+"loop": true,
+"name": &"opened",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g10mt"]
+size = Vector2(224, 160)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nusc2"]
+size = Vector2(228, 162)
+
+[node name="Chest" type="CharacterBody2D"]
+script = ExtResource("1_qnp2g")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(95, -172)
+sprite_frames = SubResource("SpriteFrames_e7vn3")
+animation = &"open"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(155, -80)
+shape = SubResource("RectangleShape2D_g10mt")
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(155, -81)
+shape = SubResource("RectangleShape2D_nusc2")
+debug_color = Color(0.935468, 1.80972e-05, 0.636275, 0.42)
+
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]

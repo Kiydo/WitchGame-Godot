@@ -4626,6 +4626,5 @@ texture = ExtResource("7_sgo4k")
 motion_mirroring = Vector2(4000, 3000)
 
 [node name="Sprite2D" type="Sprite2D" parent="Background/ParallaxLayer4"]
-visible = false
 position = Vector2(4000, 1510)
 texture = ExtResource("8_iijef")

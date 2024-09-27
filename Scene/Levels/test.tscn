@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://be3jeyf7uv5qb"]
+[gd_scene load_steps=10 format=3 uid="uid://be3jeyf7uv5qb"]
 
 [ext_resource type="PackedScene" uid="uid://dsbajyc2cqd5l" path="res://Prefab/Entities/Player/player.tscn" id="1_opkws"]
 [ext_resource type="PackedScene" uid="uid://63p5f4po4kuv" path="res://Prefab/Environment/StoneGround.tscn" id="2_3uiey"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://brlhtomc5dnlg" path="res://Prefab/UI/UI.tscn" id="5_3jhp1"]
 [ext_resource type="PackedScene" uid="uid://tltqhuwcldj8" path="res://Prefab/Entities/Enemies/Slime/slime.tscn" id="5_pqrpi"]
 [ext_resource type="AudioStream" uid="uid://ckkuluhrhb2mp" path="res://Audio/Music/adventure.mp3" id="7_2t0we"]
+[ext_resource type="PackedScene" uid="uid://ctvsbitsddty5" path="res://Prefab/Entities/Enemies/OrcKing/orc_king.tscn" id="7_dgwqt"]
 [ext_resource type="PackedScene" uid="uid://gkslhjhdxvi3" path="res://Prefab/Entities/Enemies/Goblin/goblin.tscn" id="8_sofo5"]
 
 [node name="Tutorial" type="Node2D"]
@@ -77,6 +78,12 @@ position = Vector2(-1189, 122)
 [node name="Points2" type="Marker2D" parent="Enemies/Slime/PatrolPoints"]
 position = Vector2(637, 112)
 
+[node name="Goblin" parent="Enemies" instance=ExtResource("8_sofo5")]
+position = Vector2(7588, -207)
+
+[node name="OrcKing" parent="Enemies" instance=ExtResource("7_dgwqt")]
+position = Vector2(12671, 11)
+
 [node name="Ui" parent="." instance=ExtResource("5_3jhp1")]
 unique_name_in_owner = true
 offset_left = 1157.0
@@ -91,6 +98,3 @@ volume_db = -20.0
 autoplay = true
 bus = &"Music"
 parameters/looping = true
-
-[node name="Goblin" parent="." instance=ExtResource("8_sofo5")]
-position = Vector2(5496, 248)

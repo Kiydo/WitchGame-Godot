@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://be3jeyf7uv5qb"]
+[gd_scene load_steps=13 format=3 uid="uid://be3jeyf7uv5qb"]
 
 [ext_resource type="PackedScene" uid="uid://dsbajyc2cqd5l" path="res://Prefab/Entities/Player/player.tscn" id="1_opkws"]
 [ext_resource type="PackedScene" uid="uid://63p5f4po4kuv" path="res://Prefab/Environment/StoneGround.tscn" id="2_3uiey"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://tltqhuwcldj8" path="res://Prefab/Entities/Enemies/Slime/slime.tscn" id="5_pqrpi"]
 [ext_resource type="AudioStream" uid="uid://ckkuluhrhb2mp" path="res://Audio/Music/adventure.mp3" id="7_2t0we"]
 [ext_resource type="PackedScene" uid="uid://ctvsbitsddty5" path="res://Prefab/Entities/Enemies/OrcKing/orc_king.tscn" id="7_dgwqt"]
+[ext_resource type="PackedScene" uid="uid://bqiiotj2jrdnc" path="res://Prefab/Entities/Enemies/Mimic/mimic.tscn" id="8_j5tf2"]
 [ext_resource type="PackedScene" uid="uid://gkslhjhdxvi3" path="res://Prefab/Entities/Enemies/Goblin/goblin.tscn" id="8_sofo5"]
 [ext_resource type="PackedScene" uid="uid://6bgh7531kq0r" path="res://Prefab/Environment/Objects/Crate.tscn" id="9_f6xjd"]
 [ext_resource type="PackedScene" uid="uid://dxuyygvkywgjv" path="res://Prefab/Environment/Objects/chest.tscn" id="11_wsmun"]
@@ -85,6 +86,9 @@ position = Vector2(7588, -207)
 
 [node name="OrcKing" parent="Enemies" instance=ExtResource("7_dgwqt")]
 position = Vector2(12671, 11)
+
+[node name="Mimic" parent="Enemies" instance=ExtResource("8_j5tf2")]
+position = Vector2(754, 144)
 
 [node name="Ui" parent="." instance=ExtResource("5_3jhp1")]
 unique_name_in_owner = true

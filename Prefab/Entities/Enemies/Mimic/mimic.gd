@@ -4,7 +4,7 @@ var player : CharacterBody2D
 
 func _ready() -> void:
 	animated_sprite_2d.connect("animation_finished", Callable(self, "_on_animation_finished"))
-
+	player = get_tree().get_nodes_in_group("Player")[0] as CharacterBody2D
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -18,7 +18,7 @@ func _process(delta: float) -> void:
 
 func mimic_attack():
 	var direction
-	if CharacterBody2D.global_position > player.global_position:
+	if self.global_position > player.global_position:
 		animated_sprite_2d.flip_h = true
 		direction = -1
 	print("mimic attacking")

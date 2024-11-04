@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dfvodf0oslhrh"]
+
+[ext_resource type="PackedScene" uid="uid://dw5dh23y8mt5p" path="res://Scene/Levels/base_level.tscn" id="1_6pfys"]
+
+[node name="BaseLevel" instance=ExtResource("1_6pfys")]
+
+[node name="Background" parent="." index="4"]
+visible = false

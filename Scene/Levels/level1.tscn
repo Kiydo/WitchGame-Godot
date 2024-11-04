@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=4 uid="uid://dgwbklm80arx8"]
+[gd_scene load_steps=4 format=4 uid="uid://dgwbklm80arx8"]
 
 [ext_resource type="PackedScene" uid="uid://dw5dh23y8mt5p" path="res://Scene/Levels/base_level.tscn" id="1_r3c5t"]
+[ext_resource type="PackedScene" uid="uid://6bgh7531kq0r" path="res://Prefab/Environment/Objects/Crate.tscn" id="2_6fskj"]
+[ext_resource type="PackedScene" uid="uid://03xeoc7r23t2" path="res://Scene/Levels/next_level.tscn" id="3_6d4kh"]
 
 [node name="BaseLevel" instance=ExtResource("1_r3c5t")]
 
@@ -8,8 +10,6 @@
 position = Vector2(418, -27)
 
 [node name="Camera2D" parent="Player" index="5"]
-offset = Vector2(0, -300)
-zoom = Vector2(0.4, 0.4)
 limit_left = 0
 limit_top = -2000
 limit_right = 9380
@@ -24,3 +24,17 @@ tile_map_data = PackedByteArray("AAAAAAEAAAAAADAAAAAAAAIAAAAAADEAAAAAAAMAAAAAADI
 
 [node name="Background" parent="." index="4"]
 visible = false
+
+[node name="Objects" type="Node" parent="." index="5"]
+
+[node name="Crate" parent="Objects" index="0" instance=ExtResource("2_6fskj")]
+position = Vector2(8629, -677)
+
+[node name="Crate2" parent="Objects" index="1" instance=ExtResource("2_6fskj")]
+position = Vector2(8629, -822)
+
+[node name="Crate3" parent="Objects" index="2" instance=ExtResource("2_6fskj")]
+position = Vector2(8629, -967)
+
+[node name="NextLevel" parent="." index="6" instance=ExtResource("3_6d4kh")]
+position = Vector2(8108, -780)

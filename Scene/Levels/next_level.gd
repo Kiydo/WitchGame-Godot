@@ -20,7 +20,7 @@ func _on_area_entered(area: Area2D) -> void:
 		var next_level_number = current_scene_file.to_int() + 1
 		
 		var next_level_path = "res://Scene/Levels/level" + str(next_level_number) + ".tscn"
-		call_deferred("change_scene", next_level_path) # call defered used to delay scene change untill after the physics is okay with it
+		call_deferred("change_scene", next_level_path) # call defered used to delay scene change untill after the physics callback is finished
 
 func change_scene(next_level_path: String) -> void:
 	get_tree().change_scene_to_file(next_level_path)

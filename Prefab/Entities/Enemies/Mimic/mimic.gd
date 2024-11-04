@@ -19,8 +19,13 @@ func _process(delta: float) -> void:
 func mimic_attack():
 	var direction
 	if self.global_position > player.global_position:
-		animated_sprite_2d.flip_h = true
+		animated_sprite_2d.position.x = 0
+		animated_sprite_2d.flip_h = false
 		direction = -1
+	elif self.global_position < player.global_position:
+		animated_sprite_2d.position.x = 100
+		animated_sprite_2d.flip_h = true
+		direction = 1
 	print("mimic attacking")
 	animated_sprite_2d.play("attack")
 

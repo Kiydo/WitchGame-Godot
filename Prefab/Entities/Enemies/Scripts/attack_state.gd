@@ -7,6 +7,7 @@ extends NodeState
 @export var enemy_type : String
 
 var bullet = preload("res://Prefab/Entities/Projectiles/enemy_bullet.tscn")
+var melee_hitbox = preload("res://Prefab/Entities/Projectiles/enemy_melee_hit_box.tscn")
 
 
 var player : CharacterBody2D
@@ -51,6 +52,14 @@ func on_physics_process(delta : float):
 		slime_attack(delta, direction)
 	elif character_body_2d.is_in_group("Goblin"):
 		goblin_attack(delta, direction)
+
+func spawn_melee():
+	print("Spawning Enemy melee")
+	var melee_hitbox_instance = melee_hitbox.instantiate() as Node2D
+	if character_body_2d.global_position > player.global_position and !character_body_2d.is_in_group("Slime"):
+		melee_hitbox_instance.current_melee_direction = -1
+	elif character_body_2d.global_position < player.global_position and !character_body_2d.is_in_group("Slime"):
+		melee_hitbox_instance.current_melee_direction = 1
 
 func skeleton_attack(delta: float, direction : int):
 	print("skeleton attack")

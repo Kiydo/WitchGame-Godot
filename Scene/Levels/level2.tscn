@@ -1,6 +1,12 @@
-[gd_scene load_steps=2 format=4 uid="uid://dfvodf0oslhrh"]
+[gd_scene load_steps=8 format=4 uid="uid://dfvodf0oslhrh"]
 
 [ext_resource type="PackedScene" uid="uid://dw5dh23y8mt5p" path="res://Scene/Levels/base_level.tscn" id="1_6pfys"]
+[ext_resource type="PackedScene" uid="uid://tltqhuwcldj8" path="res://Prefab/Entities/Enemies/Slime/slime.tscn" id="2_gns5w"]
+[ext_resource type="PackedScene" uid="uid://bqiiotj2jrdnc" path="res://Prefab/Entities/Enemies/Mimic/mimic.tscn" id="3_hc70v"]
+[ext_resource type="PackedScene" uid="uid://gkslhjhdxvi3" path="res://Prefab/Entities/Enemies/Goblin/goblin.tscn" id="4_be5gr"]
+[ext_resource type="PackedScene" uid="uid://dxuyygvkywgjv" path="res://Prefab/Environment/Objects/chest.tscn" id="4_hqp7t"]
+[ext_resource type="PackedScene" uid="uid://btrfbgearqgpv" path="res://Prefab/Entities/Enemies/Skeleton/skeleton.tscn" id="5_v3rx6"]
+[ext_resource type="PackedScene" uid="uid://03xeoc7r23t2" path="res://Scene/Levels/next_level.tscn" id="7_kheqf"]
 
 [node name="BaseLevel" instance=ExtResource("1_6pfys")]
 
@@ -21,3 +27,25 @@ tile_map_data = PackedByteArray("AAAAAAEAAAAAADIAAAAAAAIAAAAAADMAAAAAAAMAAAAAADQ
 
 [node name="Background" parent="." index="4"]
 visible = false
+
+[node name="Enemies" type="Node" parent="." index="5"]
+
+[node name="Slime" parent="Enemies" index="0" instance=ExtResource("2_gns5w")]
+position = Vector2(5418, -75)
+
+[node name="Mimic" parent="Enemies" index="1" instance=ExtResource("3_hc70v")]
+position = Vector2(12807, -1903)
+
+[node name="Goblin" parent="Enemies" index="2" instance=ExtResource("4_be5gr")]
+position = Vector2(10892, -1576)
+
+[node name="Skeleton" parent="Enemies" index="3" instance=ExtResource("5_v3rx6")]
+position = Vector2(12420, -77)
+
+[node name="Objects" type="Node" parent="." index="6"]
+
+[node name="Chest" parent="Objects" index="0" instance=ExtResource("4_hqp7t")]
+position = Vector2(1802, 17)
+
+[node name="NextLevel" parent="." index="7" instance=ExtResource("7_kheqf")]
+position = Vector2(14591, -442)

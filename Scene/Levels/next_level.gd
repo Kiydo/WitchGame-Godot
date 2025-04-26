@@ -13,7 +13,7 @@ func _ready() -> void:
 
 func _on_area_entered(area: Area2D) -> void:
 	print("touched next level")
-	if character_body_2d.is_in_group("Player"):
+	if character_body_2d.is_in_group("Player") == true:
 		print("going to next level")
 		var current_scene_file = get_tree().current_scene.scene_file_path
 		print("current level path: ", current_scene_file)

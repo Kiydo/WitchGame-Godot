@@ -52,6 +52,6 @@ position = Vector2(1802, 17)
 position = Vector2(14591, -442)
 
 [node name="PrevLevel" parent="." index="8" node_paths=PackedStringArray("character_body_2d") instance=ExtResource("8_r0nk6")]
-position = Vector2(1575, -552)
+position = Vector2(-220, -513)
 collision_mask = 2
 character_body_2d = NodePath("../Player")

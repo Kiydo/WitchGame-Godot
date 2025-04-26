@@ -18,6 +18,7 @@ var goblin_can_attack : bool = true
 var goblin_cooldown_timer : Timer
 
 # Skeleton Variables
+enum Melee_Direction {LEFT, RIGHT}
 var skeleton_fire_rate : float = 0.4
 var skeleton_can_attack : bool = true
 var skeleton_cooldown_timer : Timer
@@ -84,13 +85,20 @@ func skeleton_attack(delta: float, direction : int):
 		character_body_2d.move_and_slide()
 		var enemy_melee = spawn_melee()
 		var direction_vector = (player.global_position - character_body_2d.global_position).normalized()
+		print("direction vector for skeleton attack: ", direction_vector)
+		if direction_vector.x >= 0:
+			enemy_melee.current_melee_direction = Melee_Direction.LEFT
+		elif direction_vector.x < 0:
+			enemy_melee.current_melee_direction = Melee_Direction.RIGHT
 		
-		enemy_melee.direction = direction_vector
+		#enemy_melee.direction = direction_vector
 		print("direction for melee: ", direction_vector)
 		enemy_melee.global_position = character_body_2d.global_position
 		get_parent().add_child(enemy_melee)
 		skeleton_can_attack = false
 		skeleton_cooldown_timer.start()
+	else:
+		print("skeleton attack on cooldown")
 
 func slime_attack(delta: float, direction: int):
 	print("slime attack")
@@ -108,6 +116,7 @@ func goblin_attack(delta: float, direction : int):
 		
 		bullet_instance.direction = direction_vector
 		print(direction)
+		
 		bullet_instance.global_position = character_body_2d.global_position
 		get_parent().add_child(bullet_instance)
 		

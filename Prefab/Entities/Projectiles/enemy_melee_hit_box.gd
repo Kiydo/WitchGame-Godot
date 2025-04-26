@@ -1,7 +1,7 @@
 extends Area2D
 
 @export var MELEEDAMAGE = 10
-var direction : int
+var direction : Vector2
 enum Melee_direction {LEFT, RIGHT}
 
 var current_melee_direction

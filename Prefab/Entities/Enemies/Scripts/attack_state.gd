@@ -12,16 +12,29 @@ var melee_hitbox = preload("res://Prefab/Entities/Projectiles/enemy_melee_hit_bo
 
 var player : CharacterBody2D
 var direction_vector
+# Goblin Variables
 var goblin_fire_rate : float = 1.1
 var goblin_can_attack : bool = true
 var goblin_cooldown_timer : Timer
 
+# Skeleton Variables
+var skeleton_fire_rate : float = 0.4
+var skeleton_can_attack : bool = true
+var skeleton_cooldown_timer : Timer
+
 func _ready():
+	# Goblin Attack Timer
 	goblin_cooldown_timer = Timer.new()
 	goblin_cooldown_timer.one_shot = true
 	goblin_cooldown_timer.wait_time = goblin_fire_rate
 	add_child(goblin_cooldown_timer)
 	goblin_cooldown_timer.connect("timeout", Callable(self, "_on_cooldown_complete"))
+	# Skeleton Attack Timer
+	skeleton_cooldown_timer = Timer.new()
+	skeleton_cooldown_timer.one_shot = true
+	skeleton_cooldown_timer.wait_time = skeleton_fire_rate
+	add_child(skeleton_cooldown_timer)
+	skeleton_cooldown_timer.connect("timeout", Callable(self, "_on_cooldown_complete"))
 
 func on_process(delta : float):
 	pass
@@ -60,12 +73,24 @@ func spawn_melee():
 		melee_hitbox_instance.current_melee_direction = -1
 	elif character_body_2d.global_position < player.global_position and !character_body_2d.is_in_group("Slime"):
 		melee_hitbox_instance.current_melee_direction = 1
+	return melee_hitbox_instance
 
 func skeleton_attack(delta: float, direction : int):
-	print("skeleton attack")
-	character_body_2d.velocity.x += direction * SPEED * delta
-	character_body_2d.velocity.x = clamp(character_body_2d.velocity.x, -SPEED, SPEED)
-	character_body_2d.move_and_slide()
+	if skeleton_can_attack:
+		print("skeleton attack")
+		# sprite placement
+		character_body_2d.velocity.x += direction * SPEED * delta
+		character_body_2d.velocity.x = clamp(character_body_2d.velocity.x, -SPEED, SPEED)
+		character_body_2d.move_and_slide()
+		var enemy_melee = spawn_melee()
+		var direction_vector = (player.global_position - character_body_2d.global_position).normalized()
+		
+		enemy_melee.direction = direction_vector
+		print("direction for melee: ", direction_vector)
+		enemy_melee.global_position = character_body_2d.global_position
+		get_parent().add_child(enemy_melee)
+		skeleton_can_attack = false
+		skeleton_cooldown_timer.start()
 
 func slime_attack(delta: float, direction: int):
 	print("slime attack")
